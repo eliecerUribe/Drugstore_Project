@@ -1,0 +1,18 @@
+{% extends '::base.html.twig' %}
+{% block body %}
+	<h1>Eliminar <small>Medicamento.</small></h1>
+	<div>
+		<div class="large-6 small-4 columns">
+		{{ form_start(form) }}
+			{{ form_errors(form) }}
+
+			{{ form_row(form.id) }}
+
+			{{ form_rest(form) }}
+
+			<input type="submit" value="Aceptar" />
+		{{ form_end(form) }}
+		</div>
+	</div>
+	
+{% endblock %}

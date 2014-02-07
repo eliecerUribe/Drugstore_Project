@@ -1,0 +1,15 @@
+drugstore_principal_homepage:
+    pattern:  /
+    defaults: { _controller: DrugstorePrincipalBundle:Drugstore:index }
+
+drugstore_medicament_add:
+    pattern:  /add
+    defaults: { _controller: DrugstorePrincipalBundle:Medicament:add }
+    
+drugstore_medicament_delete:
+    pattern:  /delete
+    defaults: { _controller: DrugstorePrincipalBundle:Medicament:delete }
+
+drugstore_medicament_transfer:
+    pattern:  /transfer
+    defaults: { _controller: DrugstorePrincipalBundle:Medicament:transfer }

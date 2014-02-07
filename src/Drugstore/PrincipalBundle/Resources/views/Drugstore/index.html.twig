@@ -1,0 +1,93 @@
+{% extends '::base.html.twig' %}
+
+{% block body %}
+		<!-- Thumbnails -->
+ 
+			<div class="row">
+ 
+            <div class="large-4 small-6 columns">
+              <i class="fi-page-add size-108"></i>
+ 
+              <div class="panel">
+				<h5><a href="{{ path('drugstore_medicament_add') }}">Agregar</a></h5>
+                <h6 class="subheader">Medicamento</h6>
+              </div>
+            </div>
+ 
+            <div class="large-4 small-6 columns">
+              <i class="fi-page-delete size-108"></i>
+              
+ 
+              <div class="panel">
+                <h5><a href="{{ path('drugstore_medicament_delete') }}">Retirar</a></h5>
+                <h6 class="subheader">Medicamento</h6>
+              </div>
+            </div>
+ 
+            <div class="large-4 small-6 columns">
+              <i class="fi-marker size-108"></i>
+ 
+              <div class="panel">
+                <h5><a href="{{ path('drugstore_medicament_transfer') }}">Traspasar</a></h5>
+                <h6 class="subheader">Medicamento</h6>
+              </div>
+            </div>
+ 
+            <div class="large-4 small-6 columns">
+              <i class="fi-map size-108"></i>
+ 
+              <div class="panel">
+                <h5><a href="#">Trasladar</a></h5>
+                <h6 class="subheader">Medicamento</h6>
+              </div>
+            </div>
+ 
+            <div class="large-4 small-6 columns">
+              <i class="fi-page-edit size-108"></i>
+ 
+              <div class="panel">
+                <h5><a href="#">Rectificar</a></h5>
+                <h6 class="subheader">Medicamento</h6>
+              </div>
+            </div>
+ 
+            <div class="large-4 small-6 columns">
+              <i class="fi-widget size-108"></i>
+ 
+              <div class="panel">
+                <h5><a href="#">Configurar</a></h5>
+                <h6 class="subheader">Stock</h6>
+              </div>
+            </div>
+          </div>
+		
+    <!-- End Thumbnails -->
+ 
+ 
+    <!-- Managed By -->
+          <div class="row">
+            <div class="large-12 columns">
+              <div class="panel">
+                <div class="row">
+ 
+                  <div class="large-2 small-6 columns">
+                    <i class="fi-clipboard-notes size-72"></i>
+                    
+                  </div>
+ 
+                  <div class="large-10 small-6 columns">
+                    <strong>Generar Reporte<hr/></strong>
+ 
+                    Risus ligula, aliquam nec fermentum vitae, sollicitudin eget urna.
+                  </div>
+ 
+                </div>
+              </div>
+            </div>
+ 
+    <!-- End Managed By -->
+ 
+          </div>
+        </div>
+      </div>
+ {% endblock %}

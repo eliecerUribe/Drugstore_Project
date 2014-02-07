@@ -1,0 +1,4 @@
+drugstore_principal:
+    resource: "@DrugstorePrincipalBundle/Resources/config/routing.yml"
+    prefix:   /
+

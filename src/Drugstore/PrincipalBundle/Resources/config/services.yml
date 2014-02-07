@@ -1,0 +1,7 @@
+parameters:
+#    drugstore_principal.example.class: Drugstore\PrincipalBundle\Example
+
+services:
+#    drugstore_principal.example:
+#        class: %drugstore_principal.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]

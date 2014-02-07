@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>{% block title %}Bienvenido | Famácia{% endblock %}</title>
+        {% block stylesheets %}
+			<link href="{{ asset('zurb.foundation/css/foundation.css') }}" rel='stylesheet' type='text/css'>
+			<link href="{{ asset('zurb.foundation/css/normalize.css') }}" rel='stylesheet' type='text/css'>
+			<link href="{{ asset('zurb.foundation/css/foundation.min.css') }}" rel='stylesheet' type='text/css'>
+			<link href="{{ asset('icons/foundation-icons.css') }}" rel="stylesheet" >
+         {% endblock %}
+         <style>
+		  
+		  .size-72 { font-size: 72px; }
+		  .size-108 { font-size: 136px; text-align:center; }
+            
+		</style>
+        
+    </head>
+    <body>
+		
+			{# <img src="{{ asset('baby.jpg') }}"> #}
+		
+		
+        {% block navigation %}
+			<div class="row">
+				<div class="large-12 columns">
+			 
+				<!-- Navigation -->
+			 
+				  <div class="row">
+					<div class="large-12 columns">
+			 
+					  <nav class="top-bar" data-topbar>
+						<ul class="title-area">
+						  <!-- Title Area -->
+						  <li class="name">
+							<h1>
+							  <a href="#">
+								Top Bar Title
+							  </a>
+							</h1>
+						  </li>
+						  <li class="toggle-topbar menu-icon"><a href="#"><span>menu</span></a></li>
+						</ul>
+					 
+						<section class="top-bar-section">
+						  <!-- Right Nav Section -->
+						  <ul class="right">
+							<li class="divider"></li>
+							<li class="has-dropdown">
+							  <a href="#">Main Item 1</a>
+							  <ul class="dropdown">
+								<li><label>Section Name</label></li>
+								<li class="has-dropdown">
+								  <a href="#" class="">Has Dropdown, Level 1</a>
+								  <ul class="dropdown">
+									<li><a href="#">Dropdown Options</a></li>
+									<li><a href="#">Dropdown Options</a></li>
+									<li><a href="#">Level 2</a></li>
+									<li><a href="#">Subdropdown Option</a></li>
+									<li><a href="#">Subdropdown Option</a></li>
+									<li><a href="#">Subdropdown Option</a></li>
+								  </ul>
+								</li>
+								<li><a href="#">Dropdown Option</a></li>
+								<li><a href="#">Dropdown Option</a></li>
+								<li class="divider"></li>
+								<li><label>Section Name</label></li>
+								<li><a href="#">Dropdown Option</a></li>
+								<li><a href="#">Dropdown Option</a></li>
+								<li><a href="#">Dropdown Option</a></li>
+								<li class="divider"></li>
+								<li><a href="#">See all →</a></li>
+							  </ul>
+							</li>
+							<li class="divider"></li>
+							<li><a href="#">Main Item 2</a></li>
+							<li class="divider"></li>
+							<li class="has-dropdown">
+							  <a href="#">Main Item 3</a>
+							  <ul class="dropdown">
+								<li><a href="#">Dropdown Option</a></li>
+								<li><a href="#">Dropdown Option</a></li>
+								<li><a href="#">Dropdown Option</a></li>
+								<li class="divider"></li>
+								<li><a href="#">See all →</a></li>
+							  </ul>
+							</li>
+						  </ul>
+						</section>
+					  </nav>
+					  <!-- End Top Bar -->
+					</div>
+				  </div>
+		{% endblock %} <!-- End Navigation -->
+		
+		{% block sidebar %}
+		<div class="row">
+			<div class="large-4 small-12 columns">
+ 
+			  <img src="http://placehold.it/500x500&text=Logo">
+	 
+			  <div class="hide-for-small panel">
+				<h3>Header</h3>
+				<h5 class="subheader">Risus ligula, aliquam nec fermentum vitae, sollicitudin eget urna. Donec dignissim nibh fermentum odio ornare sagittis.
+				</h5>
+			  </div>
+	 
+			  <a href="#">
+			  <div class="panel callout radius">
+				<h6>99  items in your cart</h6>
+			  </div>
+			  </a>
+	 
+		</div>
+		{% endblock %}
+		
+		<div class="large-8 columns">
+          
+		{% block body %}
+		
+		{% endblock %}
+ 
+    <!-- Footer -->
+	{% block footer %}
+      <footer class="row">
+        <div class="large-12 columns"><hr />
+          <div class="row">
+ 
+            <div class="large-6 columns">
+              <p>© Copyright no one at all. Go to town.</p>
+            </div>
+ 
+          </div>
+        </div>
+      </footer>
+	{% endblock %}
+    <!-- End Footer -->
+ 
+    </div>
+  </div>		
+        
+        
+    </body>
+    {% block javascripts %}
+			<script src="{{ asset('zurb.foundation/js/vendor/custom.modernizr.js') }}"></script>
+			<script src="{{ asset('zurb.foundation/js/vendor/zepto.js') }}"></script>
+			<script src="{{ asset('zurb.foundation/js/foundation.min.js') }}"></script>
+		    
+			<script>
+				$(document).foundation();
+			</script>
+   {% endblock %}
+</html>
