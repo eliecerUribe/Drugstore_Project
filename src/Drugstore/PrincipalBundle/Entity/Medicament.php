@@ -64,30 +64,17 @@ class Medicament
     protected $tipoPresentacion;
     
     /**
-	 * @ORM\Column(type="integer")
-	 */
-    protected $stockMaximo;
-    
-    /**
-	 * @ORM\Column(type="integer")
-	 */
-    protected $stockMinimo;
-    
-    /**
-     * @ORM\ManyToMany(targetEntity="ActiveIngredient", inversedBy="medicamentos")
-     * JoinTable(name="medicamentXactiveIngredient",
-     * 		joinColumns={JoinColumn(name="medicament_id", referencedColumnName="id")},
-     *      inverseJoinColumns={JoinColumn(name="activeIngredient_id", referencedColumnName="id")}
-     *      )
+     * @var \Drugstore\PrincipalBundle\Entity\MedicamentXactiveIngredient
+     * 
+     * @ORM\OneToMany(targetEntity="MedicamentXactiveIngredient", mappedBy="medicamento")
+     * @ORM\OrderBy({"id" = "ASC"})
      */
     private $principiosActivos;
     
     /**
-     * @ORM\ManyToMany(targetEntity="Inventory", inversedBy="medicamentos")
-     * JoinTable(name="medicamentXInventory",
-     * 		joinColumns={JoinColumn(name="medicament_id", referencedColumnName="id")},
-     *      inverseJoinColumns={JoinColumn(name="inventory_id", referencedColumnName="id")}
-     *      )
+     * @var \Drugstore\PrincipalBundle\Entity\MedicamentXinventory
+     * 
+     * @ORM\OneToMany(targetEntity="MedicamentXinventory", mappedBy="medicamento")
      */
     private $inventarios;
     
@@ -330,52 +317,6 @@ class Medicament
     public function getTipoPresentacion()
     {
         return $this->tipoPresentacion;
-    }
-
-    /**
-     * Set stockMaximo
-     *
-     * @param integer $stockMaximo
-     * @return Medicament
-     */
-    public function setStockMaximo($stockMaximo)
-    {
-        $this->stockMaximo = $stockMaximo;
-
-        return $this;
-    }
-
-    /**
-     * Get stockMaximo
-     *
-     * @return integer 
-     */
-    public function getStockMaximo()
-    {
-        return $this->stockMaximo;
-    }
-
-    /**
-     * Set stockMinimo
-     *
-     * @param integer $stockMinimo
-     * @return Medicament
-     */
-    public function setStockMinimo($stockMinimo)
-    {
-        $this->stockMinimo = $stockMinimo;
-
-        return $this;
-    }
-
-    /**
-     * Get stockMinimo
-     *
-     * @return integer 
-     */
-    public function getStockMinimo()
-    {
-        return $this->stockMinimo;
     }
 
     /**

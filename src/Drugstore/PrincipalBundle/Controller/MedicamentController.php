@@ -29,7 +29,7 @@ class MedicamentController extends Controller
 			if ($form->isValid()) { // pregunta si el objeto $medicamento posee datos validos
 				$em = $this->getDoctrine()->getEntityManager();
 				$em->persist($medicamento); // el objeto es guardado para ser insertado
-				$em->flush();  // se ejecuta la insercion
+				$em->flush();  // se ejecuta la insercion a la BD
 				//return $this->redirect($this->generateUrl('drugstore_principal_homepage'));
 				return $this->render('DrugstorePrincipalBundle:Medicament:showMedicamento.html.twig', array('medicamento' => $medicamento));
 			}

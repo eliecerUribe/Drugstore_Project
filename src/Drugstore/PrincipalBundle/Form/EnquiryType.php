@@ -20,8 +20,6 @@ class EnquiryType extends AbstractType
 		$builder->add('fechaVencimiento');
 		$builder->add('principiosActivos','hidden');
 		$builder->add('tipoPresentacion');
-		$builder->add('stockMaximo');
-		$builder->add('stockMinimo');
 	}
 	
 	public function getName()

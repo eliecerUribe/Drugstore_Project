@@ -43,7 +43,9 @@ class Inventory
 	protected $responsable;
 	
 	/**
-     * @ORM\ManyToMany(targetEntity="Medicament", mappedBy="inventarios")
+     * @var \Drugstore\PrincipalBundle\Entity\MedicamentXinventory
+     * 
+     * @ORM\OneToMany(targetEntity="MedicamentXinventory", mappedBy="inventario")
      */
 	private $medicamentos;
 	

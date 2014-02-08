@@ -23,17 +23,14 @@ class ActiveIngredient
 	protected $nombre;
 	
 	/**
-	 * @ORM\Column(type="float")
-	 */
-	protected $miligramos;
-	
-	/**
-	 * @ORM\Column(type="string", length=50)
+	 * @ORM\Column(type="string", length=20)
 	 */ 
-	protected $efecto;
+	protected $aspecto;
 	
 	/**
-     * @ORM\ManyToMany(targetEntity="Medicament", mappedBy="principiosActivos")
+     * @var \Drugstore\PrincipalBundle\Entity\MedicamentXactiveIngredient
+     *
+     * @ORM\OneToMany(targetEntity="MedicamentXactiveIngredient", mappedBy="principioActivo")
      */
 	private $medicamentos;
 	
@@ -147,5 +144,28 @@ class ActiveIngredient
     public function removeMedicamento(\Drugstore\PrincipalBundle\Entity\Medicament $medicamentos)
     {
         $this->medicamentos->removeElement($medicamentos);
+    }
+
+    /**
+     * Set aspecto
+     *
+     * @param string $aspecto
+     * @return ActiveIngredient
+     */
+    public function setAspecto($aspecto)
+    {
+        $this->aspecto = $aspecto;
+
+        return $this;
+    }
+
+    /**
+     * Get aspecto
+     *
+     * @return string 
+     */
+    public function getAspecto()
+    {
+        return $this->aspecto;
     }
 }
