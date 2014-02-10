@@ -342,29 +342,6 @@ class Medicament
     }
 
     /**
-     * Add principiosActivos
-     *
-     * @param \Drugstore\PrincipalBundle\Entity\ActiveIngredient $principiosActivos
-     * @return Medicament
-     */
-    public function addPrincipiosActivos(\Drugstore\PrincipalBundle\Entity\ActiveIngredient $principiosActivos)
-    {
-        $this->principiosActivos[] = $principiosActivos;
-
-        return $this;
-    }
-
-    /**
-     * Remove principiosActivos
-     *
-     * @param \Drugstore\PrincipalBundle\Entity\ActiveIngredient $principiosActivos
-     */
-    public function removePrincipiosActivos(\Drugstore\PrincipalBundle\Entity\ActiveIngredient $principiosActivos)
-    {
-        $this->principiosActivos->removeElement($principiosActivos);
-    }
-
-    /**
      * Add inventarios
      *
      * @param \Drugstore\PrincipalBundle\Entity\Inventory $inventarios
