@@ -4,6 +4,7 @@ namespace Drugstore\PrincipalBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class TransferType extends AbstractType
 {
@@ -21,6 +22,14 @@ class TransferType extends AbstractType
 		$builder->add('fechaTraspaso');
 		$builder->add('observaciones');
 	}
+	
+	public function setDefaultOptions(OptionsResolverInterface $resolver)
+    {
+        $resolver->setDefaults(array(
+            'data_class' => 'Drugstore\PrincipalBundle\Entity\Transfer',
+        ));
+    }
+
 	
 	public function getName()
     {

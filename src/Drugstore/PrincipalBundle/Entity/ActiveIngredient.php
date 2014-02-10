@@ -39,6 +39,11 @@ class ActiveIngredient
 		$this->medicamentos = new ArrayCollection();
 	}
 	
+	/*public function __toString()
+	{
+		
+	}*/
+	
 	public function getMedicamentos()
 	{
 		return $this->Medicamentos;

@@ -75,8 +75,30 @@ class Medicament
      * @var \Drugstore\PrincipalBundle\Entity\MedicamentXinventory
      * 
      * @ORM\OneToMany(targetEntity="MedicamentXinventory", mappedBy="medicamento")
+     * @ORM\OrderBy({"id" = "ASC"})
      */
     private $inventarios;
+    
+    protected $miligramos;
+ 
+    // ...
+ 
+    public function getMiligramos()
+    {
+        return $this->miligramos;
+    }
+ 
+    /*public function setmedicamentXactiveIngredient(MedicamentXactiveIngredient $medicamentXactiveIngredient = null)
+    {
+        $this->medicamentXactiveIngredient = $medicamentXactiveIngredient;
+    }*/
+    
+    public function setMiligramos($miligramos)
+    {
+        $this->miligramos = $miligramos;
+
+        return $this;
+    }
     
     public function __construct()
     {

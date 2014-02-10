@@ -32,12 +32,12 @@ class MedicamentXinventory
 	 */
 	protected $stockMinimo;
 	
-	/*
+	/**
 	 * @ORM\ManyToOne(targetEntity="Medicament", inversedBy="inventarios")
 	 */ 
 	protected $medicamento;
 	
-	/*
+	/**
 	 * @ORM\ManyToOne(targetEntity="Inventory", inversedBy="medicamentos")
 	 */ 
 	protected $inventario;
@@ -125,5 +125,51 @@ class MedicamentXinventory
     public function getStockMinimo()
     {
         return $this->stockMinimo;
+    }
+
+    /**
+     * Set medicamento
+     *
+     * @param \Drugstore\PrincipalBundle\Entity\Medicament $medicamento
+     * @return MedicamentXinventory
+     */
+    public function setMedicamento(\Drugstore\PrincipalBundle\Entity\Medicament $medicamento = null)
+    {
+        $this->medicamento = $medicamento;
+
+        return $this;
+    }
+
+    /**
+     * Get medicamento
+     *
+     * @return \Drugstore\PrincipalBundle\Entity\Medicament 
+     */
+    public function getMedicamento()
+    {
+        return $this->medicamento;
+    }
+
+    /**
+     * Set inventario
+     *
+     * @param \Drugstore\PrincipalBundle\Entity\Inventory $inventario
+     * @return MedicamentXinventory
+     */
+    public function setInventario(\Drugstore\PrincipalBundle\Entity\Inventory $inventario = null)
+    {
+        $this->inventario = $inventario;
+
+        return $this;
+    }
+
+    /**
+     * Get inventario
+     *
+     * @return \Drugstore\PrincipalBundle\Entity\Inventory 
+     */
+    public function getInventario()
+    {
+        return $this->inventario;
     }
 }
