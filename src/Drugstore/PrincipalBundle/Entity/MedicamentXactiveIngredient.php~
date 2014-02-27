@@ -1,0 +1,47 @@
+<?php
+
+namespace Drugstore\PrincipalBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * @ORM\Entity
+ * @ORM\Table(name="m_pa")
+ * @ORM\HasLifecycleCallbacks()
+ */
+class MedicamentXactiveIngredient
+{
+	/**
+     * @ORM\Id
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="AUTO")
+     * 
+     * @var integer $id
+     */
+	protected $id;
+	
+	/**
+     * @ORM\ManyToOne(targetEntity="Medicament", inversedBy="mpa")
+     * @ORM\JoinColumn(name="medicamento_id", referencedColumnName="id")
+     * */
+	protected $medicamento;
+	
+	/**
+	 * @ORM\ManyToOne(targetEntity="ActiveIngredient", inversedBy="mpa")
+	 * @ORM\JoinColumn(name="pa_id", referencedColumnName="id")
+	 * */
+	protected $principioActivo;
+	
+	/*
+	  @ññORM\Column(type="float")
+	 
+	protected $miligramos;*/
+	
+	public function __construct()
+    {
+       // $this->principioActivo = new ArrayCollection();
+       // $this->medicamento = new ArrayCollection();
+    }
+
+    
+}

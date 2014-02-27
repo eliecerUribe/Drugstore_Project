@@ -1,0 +1,45 @@
+<?php
+
+namespace Drugstore\PrincipalBundle\Entity;
+
+use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
+/**
+ * @ORM\Entity
+ * @ORM\Table(name="activeIngredient")
+ */
+class ActiveIngredient
+{
+	/**
+     * @ORM\Id
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="AUTO")
+     * 
+     * @var integer $id
+     */
+	protected $id;
+	
+	/**
+	 * @ORM\Column(type="string", length=30)
+	 * @var string $nombre
+	 */ 
+	protected $nombre;
+	
+	/**
+     * @ORM\OneToMany(targetEntity="MedicamentXactiveIngredient", mappedBy="principioActivo", cascade={"all"} , orphanRemoval=true)
+     * */
+	protected $mpa;
+	
+	public function __construct()
+	{
+		
+	}
+	
+	public function __toString()
+	{
+		return $this->nombre;
+	}
+}

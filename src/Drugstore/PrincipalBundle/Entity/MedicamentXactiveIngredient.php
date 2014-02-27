@@ -6,7 +6,8 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="medicamentoXprincipioActivo")
+ * @ORM\Table(name="m_pa")
+ * @ORM\HasLifecycleCallbacks()
  */
 class MedicamentXactiveIngredient
 {
@@ -14,29 +15,35 @@ class MedicamentXactiveIngredient
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
+     * 
+     * @var integer $id
      */
 	protected $id;
 	
 	/**
-	 * @ORM\Column(type="float")
-	 */
-	protected $miligramos;
-	
-	/**
-     * @ORM\ManyToOne(targetEntity="Medicament", inversedBy="principiosActivos")
-     */
+     * @ORM\ManyToOne(targetEntity="Medicament", inversedBy="mpa")
+     * @ORM\JoinColumn(name="medicamento_id", referencedColumnName="id")
+     * */
 	protected $medicamento;
 	
 	/**
-	 * @ORM\ManyToOne(targetEntity="ActiveIngredient", inversedBy="medicamentos")
-	 */
+	 * @ORM\ManyToOne(targetEntity="ActiveIngredient", inversedBy="mpa")
+	 * @ORM\JoinColumn(name="pa_id", referencedColumnName="id")
+	 * */
 	protected $principioActivo;
+	
+	/*
+	  @ññORM\Column(type="float")
+	 
+	protected $miligramos;*/
 	
 	public function __construct()
     {
-        $this->principioActivo = new ArrayCollection();
-        $this->medicamento = new ArrayCollection();
+       // $this->principioActivo = new ArrayCollection();
+       // $this->medicamento = new ArrayCollection();
     }
+
+    
 
     /**
      * Get id
@@ -46,29 +53,6 @@ class MedicamentXactiveIngredient
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set miligramos
-     *
-     * @param float $miligramos
-     * @return MedicamentXactiveIngredient
-     */
-    public function setMiligramos($miligramos)
-    {
-        $this->miligramos = $miligramos;
-
-        return $this;
-    }
-
-    /**
-     * Get miligramos
-     *
-     * @return float 
-     */
-    public function getMiligramos()
-    {
-        return $this->miligramos;
     }
 
     /**

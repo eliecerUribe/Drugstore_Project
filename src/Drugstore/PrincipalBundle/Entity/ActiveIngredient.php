@@ -2,11 +2,14 @@
 
 namespace Drugstore\PrincipalBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="principio_activo")
+ * @ORM\Table(name="activeIngredient")
  */
 class ActiveIngredient
 {
@@ -14,39 +17,30 @@ class ActiveIngredient
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
+     * 
+     * @var integer $id
      */
 	protected $id;
 	
 	/**
 	 * @ORM\Column(type="string", length=30)
+	 * @var string $nombre
 	 */ 
 	protected $nombre;
 	
 	/**
-	 * @ORM\Column(type="string", length=20)
-	 */ 
-	protected $aspecto;
-	
-	/**
-     * @var \Drugstore\PrincipalBundle\Entity\MedicamentXactiveIngredient
-     *
-     * @ORM\OneToMany(targetEntity="MedicamentXactiveIngredient", mappedBy="principioActivo")
-     */
-	private $medicamentos;
+     * @ORM\OneToMany(targetEntity="MedicamentXactiveIngredient", mappedBy="principioActivo", cascade={"all"} , orphanRemoval=true)
+     * */
+	protected $mpa;
 	
 	public function __construct()
 	{
-		$this->medicamentos = new ArrayCollection();
+		
 	}
 	
-	/*public function __toString()
+	public function __toString()
 	{
-		
-	}*/
-	
-	public function getMedicamentos()
-	{
-		return $this->Medicamentos;
+		return $this->nombre;
 	}
 
     /**
@@ -83,94 +77,35 @@ class ActiveIngredient
     }
 
     /**
-     * Set miligramos
+     * Add mpa
      *
-     * @param float $miligramos
+     * @param \Drugstore\PrincipalBundle\Entity\MedicamentXactiveIngredient $mpa
      * @return ActiveIngredient
      */
-    public function setMiligramos($miligramos)
+    public function addMpa(\Drugstore\PrincipalBundle\Entity\MedicamentXactiveIngredient $mpa)
     {
-        $this->miligramos = $miligramos;
+        $this->mpa[] = $mpa;
 
         return $this;
     }
 
     /**
-     * Get miligramos
+     * Remove mpa
      *
-     * @return float 
+     * @param \Drugstore\PrincipalBundle\Entity\MedicamentXactiveIngredient $mpa
      */
-    public function getMiligramos()
+    public function removeMpa(\Drugstore\PrincipalBundle\Entity\MedicamentXactiveIngredient $mpa)
     {
-        return $this->miligramos;
+        $this->mpa->removeElement($mpa);
     }
 
     /**
-     * Set efecto
+     * Get mpa
      *
-     * @param string $efecto
-     * @return ActiveIngredient
+     * @return \Doctrine\Common\Collections\Collection 
      */
-    public function setEfecto($efecto)
+    public function getMpa()
     {
-        $this->efecto = $efecto;
-
-        return $this;
-    }
-
-    /**
-     * Get efecto
-     *
-     * @return string 
-     */
-    public function getEfecto()
-    {
-        return $this->efecto;
-    }
-
-    /**
-     * Add medicamentos
-     *
-     * @param \Drugstore\PrincipalBundle\Entity\Medicament $medicamentos
-     * @return ActiveIngredient
-     */
-    public function addMedicamento(\Drugstore\PrincipalBundle\Entity\Medicament $medicamentos)
-    {
-        $this->medicamentos[] = $medicamentos;
-
-        return $this;
-    }
-
-    /**
-     * Remove medicamentos
-     *
-     * @param \Drugstore\PrincipalBundle\Entity\Medicament $medicamentos
-     */
-    public function removeMedicamento(\Drugstore\PrincipalBundle\Entity\Medicament $medicamentos)
-    {
-        $this->medicamentos->removeElement($medicamentos);
-    }
-
-    /**
-     * Set aspecto
-     *
-     * @param string $aspecto
-     * @return ActiveIngredient
-     */
-    public function setAspecto($aspecto)
-    {
-        $this->aspecto = $aspecto;
-
-        return $this;
-    }
-
-    /**
-     * Get aspecto
-     *
-     * @return string 
-     */
-    public function getAspecto()
-    {
-        return $this->aspecto;
+        return $this->mpa;
     }
 }

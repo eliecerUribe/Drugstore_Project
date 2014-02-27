@@ -20,23 +20,38 @@ class MedicamentController extends Controller
 	public function addAction()
 	{
 		$medicamento = new Medicament();
-		$form = $this->createForm(new EnquiryType(), $medicamento); /* array('action' => $this->generateUrl('drugstore_medicament_processAdd'), 'method' => 'POST')); */
-		
 		
 		$request = $this->getRequest();
+		
+		$form = $this->createForm(new EnquiryType(), $medicamento); /* array('action' => $this->generateUrl('drugstore_medicament_processAdd'), 'method' => 'POST')); */
+		
 		if ($request->isMethod('POST')) {
+			
 			$form->bind($request); // se vinculan los datos al formulario
 			//$data = $form->getData();
 			//$pa = $data["principiosActivos"];
 			if ($form->isValid()) { // pregunta si el objeto $medicamento posee datos validos
+				
 				$em = $this->getDoctrine()->getManager();			
+				
 				$em->persist($medicamento); // el objeto es guardado para ser insertado
-				//$pa = $form->get('medicament')->getData;
-				//$em->flush();  // se ejecuta la insercion a la BD
-				//return $this->redirect($this->generateUrl('drugstore_principal_homepage'));
-				return $this->render('DrugstorePrincipalBundle:Medicament:showMedicamento.html.twig', array('medicamento' => $medicamento));
+				
+				//$pa = $form->get('principiosActivos')->getData('nombre');
+				
+				//echo $pa;
+				
+				$em->flush();  // se ejecuta la insercion a la BD
+				
+				/*return array(
+					'entity' => $medicamento,
+				);*/
+				
+				return $this->redirect($this->generateUrl('drugstore_principal_homepage'));
+				
+				//return $this->render('DrugstorePrincipalBundle:Medicament:showMedicamento.html.twig', array('medicamento' => $medicamento));
 			}
 		}
+        
 		return $this->render('DrugstorePrincipalBundle:Medicament:add.html.twig', array(
 			'form' => $form->createView()
 		));
