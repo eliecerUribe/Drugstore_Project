@@ -11,7 +11,7 @@ class EnquiryType extends AbstractType
 	public function buildForm(FormBuilderInterface $builder, array $options)
 	{
 		$builder->add('id','hidden');
-		//$builder->add('numSerie');
+		$builder->add('numSerie');
 		$builder->add('nombre');
 		$builder->add('PrincipiosActivos', 'entity', array(
 				'class' => 'Drugstore\\PrincipalBundle\\Entity\\ActiveIngredient',
@@ -19,14 +19,13 @@ class EnquiryType extends AbstractType
 				'empty_value' => '--Seleccione--',
 				'multiple' => true,
 		));
-		//$builder->add('miligramos');
 		$builder->add('precioUnitario');
-		/*$builder->add('numDosis');
+		$builder->add('numDosis');
 		$builder->add('laboratorio');
 		$builder->add('numLote');
 		$builder->add('fechaEmision');
 		$builder->add('fechaVencimiento');
-		$builder->add('tipoPresentacion');*/
+		$builder->add('tipoPresentacion');
 	}
 	
 	public function setDefaultOptions(OptionsResolverInterface $resolver)

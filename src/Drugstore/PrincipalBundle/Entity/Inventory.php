@@ -42,12 +42,6 @@ class Inventory
 	 */
 	protected $responsable;
 	
-	/**
-     * @var \Drugstore\PrincipalBundle\Entity\MedicamentXinventory
-     * 
-     * @ORM\OneToMany(targetEntity="MedicamentXinventory", mappedBy="inventario")
-     */
-	private $medicamentos;
 	
 	public function __construct()
 	{

@@ -9,7 +9,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="activeIngredient")
+ * @ORM\Table(name="ingredienteActivo")
  */
 class ActiveIngredient
 {

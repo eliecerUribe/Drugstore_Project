@@ -12,7 +12,6 @@ class ActiveIngredientType extends AbstractType
 	{
 		$builder->add('id','hidden');
 		$builder->add('nombre');
-		//$builder->add('aspecto');
 	}
 	
 	public function getName()

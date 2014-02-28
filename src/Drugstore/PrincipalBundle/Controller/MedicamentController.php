@@ -27,24 +27,16 @@ class MedicamentController extends Controller
 		
 		if ($request->isMethod('POST')) {
 			
-			$form->bind($request); // se vinculan los datos al formulario
+			$form->bind($request); 					// se vinculan los datos al formulario
 			//$data = $form->getData();
 			//$pa = $data["principiosActivos"];
-			if ($form->isValid()) { // pregunta si el objeto $medicamento posee datos validos
+			if ($form->isValid()) { 				// pregunta si el objeto $medicamento posee datos validos
 				
 				$em = $this->getDoctrine()->getManager();			
 				
-				$em->persist($medicamento); // el objeto es guardado para ser insertado
+				$em->persist($medicamento); 		// el objeto es guardado para ser insertado
 				
-				//$pa = $form->get('principiosActivos')->getData('nombre');
-				
-				//echo $pa;
-				
-				$em->flush();  // se ejecuta la insercion a la BD
-				
-				/*return array(
-					'entity' => $medicamento,
-				);*/
+				$em->flush();  						// se ejecuta la insercion a la BD
 				
 				return $this->redirect($this->generateUrl('drugstore_principal_homepage'));
 				
