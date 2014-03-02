@@ -13,3 +13,11 @@ drugstore_medicament_delete:
 drugstore_medicament_transfer:
     pattern:  /transfer
     defaults: { _controller: DrugstorePrincipalBundle:Medicament:transfer }
+
+drugstore_medicament_edit:
+    pattern:  /edit
+    defaults: { _controller: DrugstorePrincipalBundle:Medicament:edit }
+
+drugstore_medicament_update:
+    pattern:  /edit/{id}
+    defaults: { _controller: DrugstorePrincipalBundle:Medicament:update }

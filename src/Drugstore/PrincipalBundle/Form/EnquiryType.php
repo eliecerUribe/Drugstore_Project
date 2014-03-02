@@ -26,6 +26,14 @@ class EnquiryType extends AbstractType
 		$builder->add('fechaEmision');
 		$builder->add('fechaVencimiento');
 		$builder->add('tipoPresentacion');
+		$builder->add('inventario', 'entity', array(
+				'class' => 'Drugstore\\PrincipalBundle\\Entity\\Inventory',
+				'property' => 'descripcion',
+				'multiple' => false,
+		));
+		$builder->add('cantidad');
+		$builder->add('stockMaximo');
+		$builder->add('stockMinimo');
 	}
 	
 	public function setDefaultOptions(OptionsResolverInterface $resolver)

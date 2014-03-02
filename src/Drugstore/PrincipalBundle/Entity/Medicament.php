@@ -95,7 +95,7 @@ class Medicament
      * @ORM\ManyToOne(targetEntity="Inventory")
      * @ORM\JoinColumn(name="inventario_id", referencedColumnName="id")
      * */
-    protected $inventarios;
+    protected $inventario;
     
     protected $principiosActivos;
 
@@ -149,6 +149,18 @@ class Medicament
     public function getId()
     {
         return $this->id;
+    }
+    
+    /**
+     * Set id
+     *
+     * @return integer 
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+        
+        return $this;
     }
 
     /**
@@ -491,5 +503,28 @@ class Medicament
     public function getInventarios()
     {
         return $this->inventarios;
+    }
+
+    /**
+     * Set inventario
+     *
+     * @param \Drugstore\PrincipalBundle\Entity\Inventory $inventario
+     * @return Medicament
+     */
+    public function setInventario(\Drugstore\PrincipalBundle\Entity\Inventory $inventario = null)
+    {
+        $this->inventario = $inventario;
+
+        return $this;
+    }
+
+    /**
+     * Get inventario
+     *
+     * @return \Drugstore\PrincipalBundle\Entity\Inventory 
+     */
+    public function getInventario()
+    {
+        return $this->inventario;
     }
 }
