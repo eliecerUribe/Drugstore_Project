@@ -8,7 +8,10 @@
 		<label>Estado:</label><br>
 		<div class="progress"><span class="meter" style="width:{{ valor }}; background:{{ color }};"></span></div><br>
 		<label>{{ mensaje }}</label><br>
-		<label>Cantidad: {{ cantidad }}</label>
+		<label>Cantidad: {{ cantidad }}</label><br>
+		<a href="{{ path ('drugstore_medicament_setup_stock') }}" class="small button">Buscar otro</a> <a href="{{ path ('drugstore_principal_homepage') }}" class="small button">Volver</a><br>
+		<label>¿Desea configurar el stock del medicamento seleccionado?</label><br>
+		
 		
 		{# {{ form_start(form) }}
 			{{ form_errors(form) }}
@@ -16,8 +19,6 @@
 			{{ form_widget(form) }}
 
 			{{ form_rest(form) }}
-			
-			
 
 			<input type="submit" value="Submit" />
 		{{ form_end(form) }} #}
