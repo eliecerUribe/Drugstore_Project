@@ -1,0 +1,26 @@
+{% extends '::base.html.twig' %}
+{% block body %}
+<h3>Medicamento <code>{{ nombre }}</code> esta inventariado.</h3>
+<div class="row">
+		<div class="large-6 small-4 columns">
+		<label>Stock máximo actual: {{ stock_max }}</label><br>
+		<label>Stock minimo actual: {{ stock_min }}</label><br>
+		<label>Estado:</label><br>
+		<div class="progress"><span class="meter" style="width:{{ valor }}; background:{{ color }};"></span></div><br>
+		<label>{{ mensaje }}</label><br>
+		<label>Cantidad: {{ cantidad }}</label>
+		
+		{# {{ form_start(form) }}
+			{{ form_errors(form) }}
+
+			{{ form_widget(form) }}
+
+			{{ form_rest(form) }}
+			
+			
+
+			<input type="submit" value="Submit" />
+		{{ form_end(form) }} #}
+		</div>
+	</div>
+{% endblock %}

@@ -36,15 +36,14 @@ class MedicamentController extends Controller
 				
 				$em->persist($medicamento); 		// el objeto es guardado para ser insertado
 				
-				$em->flush();  						// se ejecuta la insercion a la BD
+				$em->flush(); 
 				
 				return $this->redirect($this->generateUrl('drugstore_principal_homepage'));
 				
 				//return $this->render('DrugstorePrincipalBundle:Medicament:showMedicamento.html.twig', array('medicamento' => $medicamento));
 			}
 		}
-        
-		return $this->render('DrugstorePrincipalBundle:Medicament:add.html.twig', array(
+        return $this->render('DrugstorePrincipalBundle:Medicament:add.html.twig', array(
 			'form' => $form->createView()
 		));
 	}
@@ -59,9 +58,9 @@ class MedicamentController extends Controller
 		
 		if ($request->isMethod('POST')) {
 		
-			$form->bind($request); 					// se vinculan los datos al formulario
+			$form->bind($request);
 			
-			if ($form->isValid()) { 				// pregunta si el objeto $medicamento posee datos validos
+			if ($form->isValid()) {
 			
 				$em = $this->getDoctrine()->getManager();
 				
@@ -106,11 +105,8 @@ class MedicamentController extends Controller
 				$em->flush();
 				
 				return $this->redirect($this->generateUrl('drugstore_principal_homepage'));
-			
 			}
-		
 		}
-		
 		return $this->render('DrugstorePrincipalBundle:Medicament:delete.html.twig', array(
 			'form' => $form->createView()
 		));
@@ -187,7 +183,7 @@ class MedicamentController extends Controller
 		if ($request->isMethod('POST')) {
 		
 			$form->bind($request);
-			echo "yo estuve aquí";
+
 			if ($form->isValid()) { 
 				
 				$em->persist($medicamento);
@@ -197,9 +193,123 @@ class MedicamentController extends Controller
 				return $this->redirect($this->generateUrl('drugstore_principal_homepage'));
 			}
 		}
-		
 		return $this->render('DrugstorePrincipalBundle:Medicament:update.html.twig', array(
 					'form' => $form->createView(),
+				));
+	}
+	
+	public function setupStockAction()
+	{
+		$request = $this->getRequest();
+		
+		$form = $this->createFormBuilder()
+        ->add('idInventario', 'text')
+        ->add('nombre', 'text')
+        ->getForm();
+        
+        if($request->isMethod('POST')) {
+		
+			$form->bind($request);
+			
+			if ($form->isValid()) {
+				
+				$em = $this->getDoctrine()->getManager();
+				
+				$id_i = $form->get('idInventario')->getData();
+				
+				$nombre_m = $form->get('nombre')->getData();
+				
+				$medicamento = $em->getRepository('DrugstorePrincipalBundle:Medicament')->findOneBy(
+								array('inventario' =>  $id_i,
+									  'nombre' => $nombre_m 
+								));
+				
+				$id = $medicamento->getId();
+				
+				if(!$medicamento)
+				{
+					throw $this->createNotFoundException('Unable to find Medicament entity.');
+				}
+
+				return $this->redirect($this->generateUrl('drugstore_medicament_stock', array(
+                    'id' => $id
+                )));
+			}
+		}
+				
+		return $this->render('DrugstorePrincipalBundle:Medicament:edit.html.twig', array(
+			'form' => $form->createView()
+		));
+	}
+	
+	public function stockAction($id)
+	{
+		$request = $this->getRequest();
+		
+		$form = $this->createFormBuilder()
+        ->add('stockMaximoActual', 'text')
+        ->add('stockMinimoActual', 'text')
+        ->getForm();
+		
+		$em = $this->getDoctrine()->getManager();
+		
+		$medicamento = $em->getRepository('DrugstorePrincipalBundle:Medicament')->find($id);
+		
+		if(!$medicamento)
+		{
+			throw $this->createNotFoundException('Unable to find Medicament entity.');
+		}
+		$nombre = $medicamento->getNombre();
+		
+		$stock_max = $medicamento->getStockMaximo();
+		
+		$stock_min = $medicamento->getStockMinimo();
+		
+		$cantidad_m = $medicamento->getCantidad();
+		
+		if(($cantidad_m < ($stock_min + floor(($stock_max-$stock_min)/2))) and ($cantidad_m > $stock_min))
+		{
+			$valor = '75%';
+			$color = 'purple';
+			$mensaje = 'Por encima de stock min.';
+		}
+		else if(($cantidad_m <= $stock_min) and ($cantidad_m > floor($stock_min/2)))
+		{
+			$valor = '25%';
+			$color = 'yellow';
+			$mensaje = 'Por debajo de stock min.';
+		}
+		else if($cantidad_m > ($stock_min + floor(($stock_max-$stock_min)/2)))
+		{
+			$valor = '98%';
+			$color = 'green';
+			$mensaje = 'Esta en el tope.';
+		}
+		else 
+		{ 
+			$valor = '5%';
+			$color = 'red';
+			$mensaje = '¡Alerta! Tomar medidas.';
+		}
+		
+		if ($request->isMethod('POST')) {
+		
+			//$form->bind($request);
+
+			//if ($form->isValid()) { 
+				
+				//return $this->redirect($this->generateUrl('drugstore_principal_homepage'));
+			//}
+		}
+		return $this->render('DrugstorePrincipalBundle:Medicament:stock.html.twig', array(
+					'nombre' => $nombre,
+					'stock_max' => $stock_max,
+					'stock_min' => $stock_min,
+					'valor' => $valor,
+					'color' => $color,
+					'mensaje' => $mensaje,
+					'cantidad' => $cantidad_m,
+					//'form' => $form->createView()
 				));
 	}
 }

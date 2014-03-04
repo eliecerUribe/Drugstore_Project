@@ -21,3 +21,11 @@ drugstore_medicament_edit:
 drugstore_medicament_update:
     pattern:  /edit/{id}
     defaults: { _controller: DrugstorePrincipalBundle:Medicament:update }
+    
+drugstore_medicament_setup_stock:
+    pattern:  /stock
+    defaults: { _controller: DrugstorePrincipalBundle:Medicament:setupStock }
+
+drugstore_medicament_stock:
+    pattern:  /stock/{id}
+    defaults: { _controller: DrugstorePrincipalBundle:Medicament:stock }
