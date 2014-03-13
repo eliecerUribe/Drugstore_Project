@@ -7,6 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Drugstore\PrincipalBundle\Entity\Medicament;
 use Drugstore\PrincipalBundle\Entity\Delete;
 use Drugstore\PrincipalBundle\Entity\Transfer;
+use Drugstore\PrincipalBundle\Entity\Inventory;
 
 use Drugstore\PrincipalBundle\Form\EnquiryType;
 use Drugstore\PrincipalBundle\Form\DeleteType;
@@ -126,7 +127,11 @@ class MedicamentController extends Controller
 		$request = $this->getRequest();
 		
 		$form = $this->createFormBuilder()
-        ->add('idInventario', 'text')
+        ->add('idInventario', 'entity', array(
+				'class' => 'Drugstore\\PrincipalBundle\\Entity\\Inventory',
+				'property' => 'descripcion',
+				'multiple' => false,
+		))
         ->add('nombre', 'text')
         ->getForm();
         
@@ -138,7 +143,9 @@ class MedicamentController extends Controller
 				
 				$em = $this->getDoctrine()->getManager();
 				
-				$id_i = $form->get('idInventario')->getData();
+				$inventario = $form->get('idInventario')->getData();
+				
+				$id_i = ($inventario == 'Individual') ? 1 : 2;
 				
 				$nombre_m = $form->get('nombre')->getData();
 				
@@ -193,7 +200,7 @@ class MedicamentController extends Controller
 				return $this->redirect($this->generateUrl('drugstore_principal_homepage'));
 			}
 		}
-		return $this->render('DrugstorePrincipalBundle:Medicament:update.html.twig', array(
+		return $this->render('DrugstorePrincipalBundle:Medicament:add.html.twig', array(
 					'form' => $form->createView(),
 				));
 	}
@@ -203,7 +210,11 @@ class MedicamentController extends Controller
 		$request = $this->getRequest();
 		
 		$form = $this->createFormBuilder()
-        ->add('idInventario', 'text')
+        ->add('idInventario', 'entity', array(
+				'class' => 'Drugstore\\PrincipalBundle\\Entity\\Inventory',
+				'property' => 'descripcion',
+				'multiple' => false,
+		))
         ->add('nombre', 'text')
         ->getForm();
         
@@ -215,7 +226,9 @@ class MedicamentController extends Controller
 				
 				$em = $this->getDoctrine()->getManager();
 				
-				$id_i = $form->get('idInventario')->getData();
+				$inventario = $form->get('idInventario')->getData();
+				
+				$id_i = ($inventario == 'Individual') ? 1 : 2;
 				
 				$nombre_m = $form->get('nombre')->getData();
 				

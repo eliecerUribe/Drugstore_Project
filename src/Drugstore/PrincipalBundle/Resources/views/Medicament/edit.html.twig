@@ -1,17 +1,27 @@
 {% extends '::base.html.twig' %}
 {% block body %}
-<h1><small>Identificando medicamento a editar.</small></h1>
-	<div class="row">
-		<div class="large-6 small-4 columns">
-		{{ form_start(form) }}
-			{{ form_errors(form) }}
+<h1><small>Identificar medicamento a editar.</small></h1>
 
-			{{ form_widget(form) }}
+	{{ form_start(form) }}
+	
+	{{ form_errors(form) }}
 
-			{{ form_rest(form) }}
-
-			<input type="submit" value="Submit" />
-		{{ form_end(form) }}
+		<div class="row">
+			<div class="large-6 small-4 columns">
+				{{ form_label(form.idInventario, 'Inventario:') }}
+				{{ form_errors(form.idInventario) }}
+				{{ form_widget(form.idInventario) }}
+			</div>
 		</div>
-	</div>
+		<div class="row">
+			<div class="large-6 small-4 columns">
+				{{ form_label(form.nombre, 'Nombre:') }}
+				{{ form_errors(form.nombre) }}
+				{{ form_widget(form.nombre, {'attr': {'placeholder': 'Ingrese nombre de medicamento'}}) }}
+			</div>
+		</div><br>
+		<input type="submit" class="small button" value="Submit" />
+		<a href="{{ path('drugstore_principal_homepage') }}" class="small button">Volver</a>
+	{{ form_end(form) }}
+	
 {% endblock %}

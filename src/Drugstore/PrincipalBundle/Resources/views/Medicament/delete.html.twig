@@ -1,18 +1,33 @@
 {% extends '::base.html.twig' %}
 {% block body %}
 	<h1>Eliminar <small>Medicamento.</small></h1>
-	<div>
-		<div class="large-6 small-4 columns">
-		{{ form_start(form) }}
-			{{ form_errors(form) }}
+	
+	{{ form_start(form) }}
+	
+	{{ form_errors(form) }}
+	
+	<div class="row">
+		<div class="large-6 small-6 columns">
 
-			{{ form_row(form.id) }}
-
-			{{ form_rest(form) }}
-
-			<input type="submit" value="Aceptar" />
-		{{ form_end(form) }}
+			{{ form_label(form.idInventario, 'Inventario:') }}
+			{{ form_errors(form.idInventario) }}
+			{{ form_widget(form.idInventario) }}
+			
+			{{ form_label(form.nombreMedicamento, 'Nombre del medicamento:') }}
+			{{ form_errors(form.nombreMedicamento) }}
+			{{ form_widget(form.nombreMedicamento, {'attr': {'placeholder': 'Ingrese nombre de medicamento'}}) }}
+			
+			{{ form_label(form.causa, 'Causa:') }}
+			{{ form_errors(form.causa) }}
+			{{ form_widget(form.causa) }}
+			
+			{{ form_label(form.cantidad, 'Cantidad:') }}
+			{{ form_errors(form.cantidad) }}
+			{{ form_widget(form.cantidad, {'attr': {'placeholder': 'Ingrese cantidad a dar de baja'}}) }}
 		</div>
 	</div>
-	
+	<input type="submit" class="button" value="Aceptar" />
+	<a href="{{ path('drugstore_principal_homepage') }}" class="button">Volver</a>
+	{{ form_end(form) }}
+
 {% endblock %}
