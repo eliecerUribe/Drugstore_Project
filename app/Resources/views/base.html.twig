@@ -19,9 +19,9 @@
     </head>
     <body>
 		
-			<div class="row">
-				<div class="large-12 columns">
-        {% block navigation %}
+		<div class="row">
+			<div class="large-12 columns">
+		{% block navigation %}
 
 			 <!-- Navigation -->
 			 
@@ -32,7 +32,7 @@
 						<ul class="title-area">
 						  <!-- Title Area -->
 						  <li class="name">
-							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#"><img src="{{ asset('zurb.foundation/img/nombre.png') }}" height="220" width="180"></a>
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="{{ path('drugstore_principal_homepage') }}"><img src="{{ asset('zurb.foundation/img/nombre.png') }}" height="220" width="180"></a>
 							<!--<h1>
 							  <a href="#">
 								
@@ -50,14 +50,14 @@
 							  <a href="#">Medicamento</a>
 							  <ul class="dropdown">
 								<li><label>Acciones</label></li>
-								<li><a href="#">Agregar</a></li>
-								<li><a href="#">Retirar</a></li>
-								<li><a href="#">Traspasar</a></li>
-								<li><a href="#">Rectificar</a></li>
+								<li><a href="{{ path('drugstore_medicament_add') }}">Agregar</a></li>
+								<li><a href="{{ path('drugstore_medicament_delete') }}">Retirar</a></li>
+								<li><a href="{{ path('drugstore_medicament_transfer') }}">Traspasar</a></li>
+								<li><a href="{{ path('drugstore_medicament_edit') }}">Rectificar</a></li>
 							  </ul>
 							</li>
 							<li class="divider"></li>
-							  <li><a href="#">Stock</a></li>
+							  <li><a href="{{ path('drugstore_medicament_setup_stock') }}">Stock</a></li>
 							</li>
 							<li class="divider"></li>
 							  <li><a href="#">Reportes</a></li>
