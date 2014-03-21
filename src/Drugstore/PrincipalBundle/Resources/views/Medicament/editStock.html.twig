@@ -1,0 +1,31 @@
+{% extends '::base.html.twig' %}
+
+{% block body %}
+
+<h1>Configurar <small>stock {{ nombre }}.</small></h1>
+
+	{{ form_start(form, {'attr': {'class': 'custom'}}) }}
+	
+	{{ form_errors(form) }}
+	
+	<div class="row">
+		<div class="large-6 small-6 columns">
+			{{ form_label(form.stockMaximo, 'Nuevo Stock Máximo:') }}
+			{{ form_errors(form.stockMaximo) }}
+			{{ form_widget(form.stockMaximo, {'attr': {'placeholder': 'Ingrese stock máximo de medicamento'}}) }}
+			
+			{{ form_label(form.stockMinimo, 'Nuevo Stock Mínimo:') }}
+			{{ form_errors(form.stockMinimo) }}
+			{{ form_widget(form.stockMinimo, {'attr': {'placeholder': 'Ingrese stock mínimo de medicamento'}}) }}
+			
+			{{ form_label(form.cantidad, 'Nueva Cantidad:') }}
+			{{ form_errors(form.cantidad) }}
+			{{ form_widget(form.cantidad, {'attr': {'placeholder': 'Ingrese cantidad del medicamento'}}) }}
+		</div>
+	</div>
+	<input type="submit" class="small button" value="Aceptar" />
+	<a href="{{ url }}" class="small button">Cancelar</a>
+	
+	{{ form_end(form) }}
+
+{% endblock %}
