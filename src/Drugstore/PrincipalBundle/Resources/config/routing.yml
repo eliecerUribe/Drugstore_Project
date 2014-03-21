@@ -29,3 +29,9 @@ drugstore_medicament_setup_stock:
 drugstore_medicament_stock:
     pattern:  /stock/{id}
     defaults: { _controller: DrugstorePrincipalBundle:Medicament:stock }
+    
+drugstore_medicament_edit_stock:
+    pattern:  /editStock/{id}
+    defaults: { _controller: DrugstorePrincipalBundle:Medicament:editStock }
+    requirements:
+        id:  \d+

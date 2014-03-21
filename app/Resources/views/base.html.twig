@@ -90,7 +90,7 @@
 		</div>
 		{% endblock %}
 		
-		<div class="large-9 columns">
+		<div class="large-8 columns">
           
 		{% block body %}
 		
@@ -116,12 +116,14 @@
       
     </body>
     {% block javascripts %}
+			<script src="{{ asset('js/jquery-1.11.0.js') }}"></script>
 			<script src="{{ asset('zurb.foundation/js/vendor/custom.modernizr.js') }}"></script>
 			<script src="{{ asset('zurb.foundation/js/vendor/zepto.js') }}"></script>
 			<script src="{{ asset('zurb.foundation/js/foundation.min.js') }}"></script>
 		    
 			<script>
 				$(document).foundation();
-			</script>
+
+			
    {% endblock %}
 </html>

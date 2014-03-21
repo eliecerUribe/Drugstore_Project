@@ -1,8 +1,9 @@
 {% extends '::base.html.twig' %}
+
 {% block body %}
 <h1><small>Identificar medicamento a editar.</small></h1>
 
-	{{ form_start(form) }}
+	{{ form_start(form, {'attr': {'class': 'custom'}}) }}
 	
 	{{ form_errors(form) }}
 

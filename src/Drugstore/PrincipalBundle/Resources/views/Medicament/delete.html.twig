@@ -25,9 +25,9 @@
 			{{ form_errors(form.cantidad) }}
 			{{ form_widget(form.cantidad, {'attr': {'placeholder': 'Ingrese cantidad a dar de baja'}}) }}
 		</div>
-	</div>
-	<input type="submit" class="button" value="Aceptar" />
-	<a href="{{ path('drugstore_principal_homepage') }}" class="button">Volver</a>
+	</div><br>
+	<input type="submit" class="small button" value="Aceptar" />
+	<a href="{{ path('drugstore_principal_homepage') }}" class="small button">Volver</a>
 	{{ form_end(form) }}
 
 {% endblock %}

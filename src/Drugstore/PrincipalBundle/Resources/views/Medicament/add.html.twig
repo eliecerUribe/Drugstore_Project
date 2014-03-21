@@ -3,19 +3,27 @@
 {% block body %}
 	<h1>Agregar <small>Medicamento.</small></h1>
 	
-	{{ form_start(form) }}
+	{{ form_start(form, {'attr': {'class': 'custom'}}) }}
 		
-		{{ form_errors(form) }}
+	{{ form_errors(form) }}
 		<div class="row">
 			<div class="large-6 small-6 columns">
-			
+				
+				{# <label>Inventario:</label>
+				<select id="customDropdown1" name="inventario">
+				<option>--Seleccione--</option>
+				{% for inventario in inventarios %}
+				<option value="{{inventario.id}}">
+					{{ inventario.descripcion }}
+				</option>
+				{% endfor %}
+				</select> #}
 				{{ form_label(form.inventario, 'Inventario:') }}
 				{{ form_errors(form.inventario) }}
 				{{ form_widget(form.inventario) }}
-			
 			</div>
 			
-			<div class="large-6 small-6 columns">
+			<div id="serie" class="large-6 small-6 columns">
 			
 				{{ form_label(form.numSerie, '# de serie:') }}
 				{{ form_errors(form.numSerie) }}
@@ -60,31 +68,14 @@
 		</div>
 		<div class="row">
 			
-			<div class="large-6 small-6 columns">
-			
-				{{ form_label(form.numDosis, 'Número de dosis:') }}
-				{{ form_errors(form.numDosis) }}
-				{{ form_widget(form.numDosis, {'attr': {'placeholder': 'Ingrese número de dosis'}}) }}
-			
-			</div>
-			<div class="large-6 small-6 columns">
-			
-				{{ form_label(form.numLote, 'Número de lote:') }}
-				{{ form_errors(form.numLote) }}
-				{{ form_widget(form.numLote, {'attr': {'placeholder': 'Ingrese número de lote de medicamento'}}) }}
-			
-			</div>
-		</div>
-		<div class="row">
-			
-			<div class="large-6 small-6 columns">
+			<div id="fechaE" class="large-6 small-6 columns">
 			
 				{{ form_label(form.fechaEmision, 'Fecha de emisión:') }}
 				{{ form_errors(form.fechaEmision) }}
 				{{ form_widget(form.fechaEmision) }}
 			
 			</div>
-			<div class="large-6 small-6 columns">
+			<div id="fechaV" class="large-6 small-6 columns">
 			
 				{{ form_label(form.fechaVencimiento, 'Fecha de vencimiento:') }}
 				{{ form_errors(form.fechaVencimiento) }}
@@ -94,18 +85,35 @@
 		</div>
 		<div class="row">
 			
-			<div class="large-6 small-6 columns">
+			<div id="stockMax" class="large-6 small-6 columns">
 			
 				{{ form_label(form.stockMaximo, 'Stock máximo:') }}
 				{{ form_errors(form.stockMaximo) }}
 				{{ form_widget(form.stockMaximo, {'attr': {'placeholder': 'Ingrese stock máximo'}}) }}
 			
 			</div>
-			<div class="large-6 small-6 columns">
+			<div id="stockMin" class="large-6 small-6 columns">
 			
 				{{ form_label(form.stockMinimo, 'Stock mínimo:') }}
 				{{ form_errors(form.stockMinimo) }}
 				{{ form_widget(form.stockMinimo, {'attr': {'placeholder': 'Ingrese stock mínimo'}}) }}
+			
+			</div>
+		</div>
+		<div class="row">
+			
+			<div class="large-6 small-6 columns">
+			
+				{{ form_label(form.numDosis, 'Número de dosis:') }}
+				{{ form_errors(form.numDosis) }}
+				{{ form_widget(form.numDosis, {'attr': {'placeholder': 'Ingrese número de dosis'}}) }}
+			
+			</div>
+			<div id="numLote" class="large-6 small-6 columns">
+			
+				{{ form_label(form.numLote, 'Número de lote:') }}
+				{{ form_errors(form.numLote) }}
+				{{ form_widget(form.numLote, {'attr': {'placeholder': 'Ingrese número de lote de medicamento'}}) }}
 			
 			</div>
 		</div>
@@ -118,18 +126,45 @@
 				{{ form_widget(form.PrincipiosActivos) }}
 			
 			</div>
-			<div class="large-6 small-6 columns">
+			<div id="cantidad" class="large-6 small-6 columns">
 			
 				{{ form_label(form.cantidad, 'Cantidad:') }}
 				{{ form_errors(form.cantidad) }}
 				{{ form_widget(form.cantidad, {'attr': {'placeholder': 'Ingrese cantidad del medicamento'}}) }}
 			
 			</div>
-		</div>
-		<input type="submit" class="button" value="Submit" />
-		<a href="{{ path('drugstore_principal_homepage') }}" class="button">Volver</a>
+		</div><br>
+		<input type="submit" class="small button" value="Submit" />
+		<a href="{{ path('drugstore_principal_homepage') }}" class="small button">Volver</a>
 	
 	{{ form_end(form) }}
 		
+	
+{% endblock %}
+
+{% block javascripts %}
+	{{ parent() }}
+		$(document).ready(function(){
+			$('#customDropdown1').click(function(){
+				var valor = $('#customDropdown1').val();
+				if(valor==1){
+					$('div#serie').fadeOut();
+					$('div#numLote').fadeOut();
+					$('div#fechaE').fadeOut();
+					$('div#fechaV').fadeOut();
+					$('div#cantidad').fadeOut();
+					}
+				else
+				{
+					$('div#serie').show();
+					$('div#numLote').show();
+					$('div#fechaE').show();
+					$('div#fechaV').show();
+					$('div#cantidad').show();
+				}
+			});
+		});
+	</script>
+	
 	
 {% endblock %}

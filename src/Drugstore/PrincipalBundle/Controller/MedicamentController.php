@@ -27,13 +27,21 @@ class MedicamentController extends Controller
 		
 		$form = $this->createForm(new EnquiryType(), $medicamento); /* array('action' => $this->generateUrl('drugstore_medicament_processAdd'), 'method' => 'POST')); */
 		
+		$em = $this->getDoctrine()->getManager();
+				
+		$inventarios = $em->getRepository('DrugstorePrincipalBundle:Inventory')->findAll();		
+				
 		if ($request->isMethod('POST')) {
 			
 			$form->bind($request); 					// se vinculan los datos al formulario
 			
 			if ($form->isValid()) { 				// pregunta si el objeto $medicamento posee datos validos
 				
-				$em = $this->getDoctrine()->getManager();			
+				$var = $form->get('inventario')->getData();
+				
+				$medicamento->setInventarios($var);
+				
+				$em = $this->getDoctrine()->getManager();
 				
 				$em->persist($medicamento); 		// el objeto es guardado para ser insertado
 				
@@ -41,11 +49,11 @@ class MedicamentController extends Controller
 				
 				return $this->redirect($this->generateUrl('drugstore_principal_homepage'));
 				
-				//return $this->render('DrugstorePrincipalBundle:Medicament:showMedicamento.html.twig', array('medicamento' => $medicamento));
 			}
 		}
         return $this->render('DrugstorePrincipalBundle:Medicament:add.html.twig', array(
-			'form' => $form->createView()
+			'form' => $form->createView(),
+			'inventarios' => $inventarios,
 		));
 	}
 	
@@ -259,10 +267,10 @@ class MedicamentController extends Controller
 	{
 		$request = $this->getRequest();
 		
-		$form = $this->createFormBuilder()
+		/*$form = $this->createFormBuilder()
         ->add('stockMaximoActual', 'text')
         ->add('stockMinimoActual', 'text')
-        ->getForm();
+        ->getForm();*/
 		
 		$em = $this->getDoctrine()->getManager();
 		
@@ -286,7 +294,7 @@ class MedicamentController extends Controller
 			$color = 'purple';
 			$mensaje = 'Por encima de stock min.';
 		}
-		else if(($cantidad_m <= $stock_min) and ($cantidad_m > floor($stock_min/2)))
+		else if(($cantidad_m <= $stock_min) and ($cantidad_m >= floor($stock_min/2)))
 		{
 			$valor = '25%';
 			$color = 'yellow';
@@ -305,7 +313,12 @@ class MedicamentController extends Controller
 			$mensaje = '¡Alerta! Tomar medidas.';
 		}
 		
-		if ($request->isMethod('POST')) {
+		$url = $this->generateUrl(
+            'drugstore_medicament_edit_stock',
+            array('id' => $id)
+        );
+		
+		//if ($request->isMethod('POST')) {
 		
 			//$form->bind($request);
 
@@ -313,7 +326,7 @@ class MedicamentController extends Controller
 				
 				//return $this->redirect($this->generateUrl('drugstore_principal_homepage'));
 			//}
-		}
+		//}
 		return $this->render('DrugstorePrincipalBundle:Medicament:stock.html.twig', array(
 					'nombre' => $nombre,
 					'stock_max' => $stock_max,
@@ -322,7 +335,55 @@ class MedicamentController extends Controller
 					'color' => $color,
 					'mensaje' => $mensaje,
 					'cantidad' => $cantidad_m,
+					'url' => $url,
 					//'form' => $form->createView()
 				));
+	}
+	
+	public function editStockAction($id)
+	{
+		$request = $this->getRequest();
+		
+		$em = $this->getDoctrine()->getManager();
+		
+		$medicamento = $em->getRepository('DrugstorePrincipalBundle:Medicament')->find($id);
+		
+		$nombre = $medicamento->getNombre();
+		
+		if(!$medicamento)
+		{
+			throw $this->createNotFoundException('Unable to find Medicament entity.');
+		}
+		
+		$form = $this->createFormBuilder($medicamento)
+        ->add('stockMaximo', 'text')
+        ->add('stockMinimo', 'text')
+        ->add('cantidad', 'text')
+        ->getForm();
+        
+        $url = $this->generateUrl(
+            'drugstore_medicament_stock',
+            array('id' => $id)
+        );
+        
+        if ($request->isMethod('POST')) {
+		
+			$form->bind($request);
+
+			if ($form->isValid()) { 
+				
+				$em->persist($medicamento);
+				
+				$em->flush();
+				
+				return $this->redirect($this->generateUrl('drugstore_medicament_stock',	array('id' => $id)));
+			}
+		}
+        
+        return $this->render('DrugstorePrincipalBundle:Medicament:editStock.html.twig', array(
+			'nombre' => $nombre,
+			'url' => $url,
+			'form' => $form->createView()
+		));
 	}
 }

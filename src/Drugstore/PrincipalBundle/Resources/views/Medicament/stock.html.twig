@@ -2,26 +2,34 @@
 {% block body %}
 <h3>Medicamento <code style="color:#000033;">{{ nombre }}</code> esta inventariado.</h3>
 <div class="row">
-		<div class="large-6 small-4 columns">
-		<label>Stock máximo actual: {{ stock_max }}</label><br>
-		<label>Stock minimo actual: {{ stock_min }}</label><br>
+	<div class="large-6 small-6 columns">
+		
+		<label>Stock máximo actual:</label> <input type="text" disabled=true value="{{ stock_max }}"><br>
+	
+		<label>Stock minimo actual:</label> <input type="text" disabled=true value="{{ stock_min }}"><br>
+	</div>
+</div>
+<div class="row">
+	<div class="large-8 small-10 columns">
 		<label>Estado:</label><br>
-		<div class="progress"><span class="meter" style="width:{{ valor }}; background:{{ color }};"></span></div><br>
-		<label>{{ mensaje }}</label><br>
-		<label>Cantidad: {{ cantidad }}</label><br>
-		<a href="{{ path ('drugstore_medicament_setup_stock') }}" class="small button">Buscar otro</a> <a href="{{ path ('drugstore_principal_homepage') }}" class="small button">Volver</a><br>
-		<label>¿Desea configurar el stock del medicamento seleccionado?</label><br>
 		
+		<div class="progress radius"><span class="meter" style="width:{{ valor }}; background:{{ color }};"></span></div><br>
 		
-		{# {{ form_start(form) }}
-			{{ form_errors(form) }}
-
-			{{ form_widget(form) }}
-
-			{{ form_rest(form) }}
-
-			<input type="submit" value="Submit" />
-		{{ form_end(form) }} #}
+		<label><b>{{ mensaje }}</b></label><br>
+		
+		<label><b>Cantidad: {{ cantidad }}</b></label><br>
+	</div>
+</div>
+<div class="row">
+	<div class="large-12 small-10 columns">
+		<div align=""><a href="{{ path ('drugstore_medicament_setup_stock') }}" class="small button">Buscar otro</a></div><br>
+		
+		<label>¿Desea configurar el stock de {{ nombre }}?</label><br>
+		
+		<div align="">
+			<a href="{{ url }}" class="small button">Sí</a> <a href="{{ path ('drugstore_principal_homepage') }}" class="small button">Volver</a>
 		</div>
 	</div>
+</div>
+
 {% endblock %}
