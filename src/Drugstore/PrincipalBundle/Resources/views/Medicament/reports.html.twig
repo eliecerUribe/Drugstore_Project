@@ -5,22 +5,52 @@
 {% block body %}
 
 	<h1 class="fi-magnifying-glass size-45"> Buscar por:</h1>
-	
+	{{ form_start(form, {'attr': {'class': ''}}) }}
+	{{ form_errors(form) }}
 	<div class="row">
 		<div class="large-6 small-6 columns">
-		  <label><input type="checkbox" id="checkbox1"><span class="custom checkbox"></span> Todos</label> <input type="text" id="texto1" name="" placeholder="Escriba aquí">
-		  <label><input type="checkbox" id="checkbox2"><span class="custom checkbox"></span> Nombre medicamento</label> <input type="text" id="texto2" name="" placeholder="Escriba aquí">
-		  <label><input type="checkbox" id="checkbox3"><span class="custom checkbox"></span> Laboratorio</label> <input type="text" id="texto3" name="" placeholder="Escriba aquí">
-		  <label><input type="checkbox" id="checkbox4"><span class="custom checkbox"></span> Principio(s) activo(s)</label> <input type="text" id="texto4" name="" placeholder="Escriba aquí">
-		  <label><input type="checkbox" id="checkbox5"><span class="custom checkbox"></span> Tipo presentación</label> <input type="text" id="texto5" name="" placeholder="Escriba aquí">
-		  <label><input type="checkbox" id="checkbox6"><span class="custom checkbox"></span> Lote</label> <input type="text" id="texto6" name="" placeholder="Escriba aquí">
-		  <label><input type="checkbox" id="checkbox7"><span class="custom checkbox"></span> Fecha emisión</label> <input type="text" id="texto7" name="" placeholder="Escriba aquí">
-		  <label><input type="checkbox" id="checkbox8"><span class="custom checkbox"></span> Fecha vencimiento</label> <input type="text" id="texto8" name="" placeholder="Escriba aquí">
-		  <label><input type="checkbox" id="checkbox9"><span class="custom checkbox"></span> Llegaron a stock mínimo</label> <input type="text" id="texto9" name="" placeholder="Escriba aquí">
-		  <label><input type="checkbox" id="checkbox10"><span class="custom checkbox"></span> Agotados</label> <input type="text" id="texto10" name="" placeholder="Escriba aquí">
+		  <label><input type="checkbox" id="checkbox1"><span class="custom checkbox"></span> Todos</label>
+		  <label><input type="checkbox" id="checkbox2"><span class="custom checkbox"></span> Nombre medicamento</label>
+		  {{ form_label(form.texto2, ' ')}}
+		  {{ form_errors(form.texto2) }}
+		  {{ form_widget(form.texto2) }}
+		  <label><input type="checkbox" id="checkbox3"><span class="custom checkbox"></span> Laboratorio</label>
+		  {{ form_label(form.texto3, ' ')}}
+		  {{ form_errors(form.texto3) }}
+		  {{ form_widget(form.texto3) }}
+		  <label><input type="checkbox" id="checkbox4"><span class="custom checkbox"></span> Principio(s) activo(s)</label>
+		  {{ form_label(form.texto4, ' ')}}
+		  {{ form_errors(form.texto4) }}
+		  {{ form_widget(form.texto4) }}
+		  <label><input type="checkbox" id="checkbox5"><span class="custom checkbox"></span> Tipo presentación</label>
+		  {{ form_label(form.texto5, ' ')}}
+		  {{ form_errors(form.texto5) }}
+		  {{ form_widget(form.texto5) }}
+		  <label><input type="checkbox" id="checkbox6"><span class="custom checkbox"></span> Lote</label>
+		  {{ form_label(form.texto6, ' ')}}
+		  {{ form_errors(form.texto6) }}
+		  {{ form_widget(form.texto6) }}
+		  <label><input type="checkbox" id="checkbox7"><span class="custom checkbox"></span> Fecha emisión</label> 
+		  {{ form_label(form.texto7, ' ')}}
+		  {{ form_errors(form.texto7) }}
+		  {{ form_widget(form.texto7) }}
+		  <label><input type="checkbox" id="checkbox8"><span class="custom checkbox"></span> Fecha vencimiento</label> 
+		  {{ form_label(form.texto8, ' ')}}
+		  {{ form_errors(form.texto8) }}
+		  {{ form_widget(form.texto8) }}
+		  <label><input type="checkbox" id="checkbox9"><span class="custom checkbox"></span> Llegaron a stock mínimo</label> 
+		  {{ form_label(form.texto9, ' ')}}
+		  {{ form_errors(form.texto9) }}
+		  {{ form_widget(form.texto9) }}
+		  <label><input type="checkbox" id="checkbox10"><span class="custom checkbox"></span> Agotados</label>
+		  {{ form_label(form.texto10, ' ')}}
+		  {{ form_errors(form.texto10) }}
+		  {{ form_widget(form.texto10) }}
 		</div>
     </div><br>
-    <a href="#" class="small button">Aceptar</a>
+    <input type="submit" class="small button" value="Aceptar" />
+    
+    {{ form_end(form) }}
 
 {% endblock %}
 
@@ -28,78 +58,77 @@
 	{{ parent() }}
 	<script>
 		$(document).ready(function(){
-			$('#texto1').hide();
-			$('#texto2').hide();
-			$('#texto3').hide();
-			$('#texto4').hide();
-			$('#texto5').hide();
-			$('#texto6').hide();
-			$('#texto7').hide();
-			$('#texto8').hide();
-			$('#texto9').hide();
-			$('#texto10').hide();
+			$('#form_texto2').hide();
+			$('#form_texto3').hide();
+			$('#form_texto4').hide();
+			$('#form_texto5').hide();
+			$('#form_texto6').hide();
+			$('#form_texto7').hide();
+			$('#form_texto8').hide();
+			$('#form_texto9').hide();
+			$('#form_texto10').hide();
 			
 			$('#checkbox2').click(function(){
 				if($('#checkbox2').is(':checked'))
 				{
-					$('#texto2').show();
-				}else $('#texto2').hide();
+					$('#form_texto2').show();
+				}else $('#form_texto2').hide();
 			});
 			
 			$('#checkbox3').click(function(){
 				if($('#checkbox3').is(':checked'))
 				{
-					$('#texto3').show();
-				}else $('#texto3').hide();
+					$('#form_texto3').show();
+				}else $('#form_texto3').hide();
 			});
 			
 			$('#checkbox4').click(function(){
 				if($('#checkbox4').is(':checked'))
 				{
-					$('#texto4').show();
-				}else $('#texto4').hide();
+					$('#form_texto4').show();
+				}else $('#form_texto4').hide();
 			});
 			
 			$('#checkbox5').click(function(){
 				if($('#checkbox5').is(':checked'))
 				{
-					$('#texto5').show();
-				}else $('#texto5').hide();
+					$('#form_texto5').show();
+				}else $('#form_texto5').hide();
 			});
 			
 			$('#checkbox6').click(function(){
 				if($('#checkbox6').is(':checked'))
 				{
-					$('#texto6').show();
-				}else $('#texto6').hide();
+					$('#form_texto6').show();
+				}else $('#form_texto6').hide();
 			});
 			
 			$('#checkbox7').click(function(){
 				if($('#checkbox7').is(':checked'))
 				{
-					$('#texto7').show();
-				}else $('#texto7').hide();
+					$('#form_texto7').show();
+				}else $('#form_texto7').hide();
 			});
 			
 			$('#checkbox8').click(function(){
 				if($('#checkbox8').is(':checked'))
 				{
-					$('#texto8').show();
-				}else $('#texto8').hide();
+					$('#form_texto8').show();
+				}else $('#form_texto8').hide();
 			});
 			
 			$('#checkbox9').click(function(){
 				if($('#checkbox9').is(':checked'))
 				{
-					$('#texto9').show();
-				}else $('#texto9').hide();
+					$('#form_texto9').show();
+				}else $('#form_texto9').hide();
 			});
 			
 			$('#checkbox10').click(function(){
 				if($('#checkbox10').is(':checked'))
 				{
-					$('#texto10').show();
-				}else $('#texto10').hide();
+					$('#form_texto10').show();
+				}else $('#form_texto10').hide();
 			});
 			
 		});
