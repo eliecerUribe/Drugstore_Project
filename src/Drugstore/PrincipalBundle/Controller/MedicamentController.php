@@ -389,7 +389,33 @@ class MedicamentController extends Controller
 	}
 	
 	public function reportsAction()
-	{
-		return $this->render('DrugstorePrincipalBundle:Medicament:reports.html.twig');
+	{   
+		$request = $this->getRequest();
+		
+		$em = $this->getDoctrine()->getManager();
+		
+		$form = $this->createFormBuilder()
+        ->add('texto2', 'text')
+        ->add('texto3', 'text')
+        ->add('texto4', 'text')
+        ->add('texto5', 'text')
+        ->add('texto6', 'text')
+        ->add('texto7', 'text')
+        ->add('texto8', 'text')
+        ->add('texto9', 'text')
+        ->add('texto10', 'text')
+        ->getForm();
+		
+		if ($request->isMethod('POST')) {
+			
+			//$form->bind($request); 
+			
+			//if ($form->isValid()) { 
+				
+			//}
+		}
+		return $this->render('DrugstorePrincipalBundle:Medicament:reports.html.twig', array(
+			'form' => $form->createView(),
+		));
 	}
 }
