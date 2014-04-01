@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta charset="UTF-8" />
-        <title>{% block title %}Famácia | Bienvenido{% endblock %}</title>
+        <title>{% block title %}LaFamácia | Inicio{% endblock %}</title>
         {% block stylesheets %}
 			<link href="{{ asset('zurb.foundation/css/foundation.css') }}" rel='stylesheet' type='text/css'>
 			<link href="{{ asset('zurb.foundation/css/normalize.css') }}" rel='stylesheet' type='text/css'>
@@ -12,6 +12,7 @@
          <style>
 		  
 		  .size-72 { font-size: 72px; }
+		  .size-45 { font-size: 45px; }
 		  .size-108 { font-size: 136px; text-align:center; }
             
 		</style>
@@ -49,7 +50,7 @@
 							<li class="has-dropdown">
 							  <a href="#">Medicamento</a>
 							  <ul class="dropdown">
-								<li><label>Acciones</label></li>
+								<li><label>::Acciones::</label></li>
 								<li><a href="{{ path('drugstore_medicament_add') }}">Agregar</a></li>
 								<li><a href="{{ path('drugstore_medicament_delete') }}">Retirar</a></li>
 								<li><a href="{{ path('drugstore_medicament_transfer') }}">Traspasar</a></li>
@@ -117,13 +118,16 @@
     </body>
     {% block javascripts %}
 			<script src="{{ asset('js/jquery-1.11.0.js') }}"></script>
-			<script src="{{ asset('zurb.foundation/js/vendor/custom.modernizr.js') }}"></script>
-			<script src="{{ asset('zurb.foundation/js/vendor/zepto.js') }}"></script>
-			<script src="{{ asset('zurb.foundation/js/foundation.min.js') }}"></script>
+			
+		    {% javascripts '@DrugstorePrincipalBundle/Resources/public/zurb.foundation/js/vendor/custom.modernizr.js'
+						   '@DrugstorePrincipalBundle/Resources/public/zurb.foundation/js/vendor/zepto.js'
+						   '@DrugstorePrincipalBundle/Resources/public/zurb.foundation/js/foundation.min.js' %}
+				<script type="text/javascript" src="{{ asset_url }}"></script>
+			{% endjavascripts %}
 		    
 			<script>
 				$(document).foundation();
-
+			</script>
 			
    {% endblock %}
 </html>

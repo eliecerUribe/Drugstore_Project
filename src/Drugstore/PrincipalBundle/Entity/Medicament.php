@@ -78,11 +78,13 @@ class Medicament
 	
 	/**
 	 * @ORM\Column(type="integer")
+	 * @Assert\NotBlank()
 	 */
 	protected $stockMaximo;
 	
 	/**
 	 * @ORM\Column(type="integer")
+	 * @Assert\NotBlank()
 	 */
 	protected $stockMinimo;
     

@@ -16,6 +16,7 @@ use Drugstore\PrincipalBundle\Form\TransferType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Validator\Constraints\Date;
+use Symfony\Component\Form\ClickableInterface;
 
 class MedicamentController extends Controller
 {
@@ -29,7 +30,8 @@ class MedicamentController extends Controller
 		
 		$em = $this->getDoctrine()->getManager();
 				
-		$inventarios = $em->getRepository('DrugstorePrincipalBundle:Inventory')->findAll();		
+		$inventarios = $em->getRepository('DrugstorePrincipalBundle:Inventory')->findAll();
+				
 				
 		if ($request->isMethod('POST')) {
 			
@@ -37,9 +39,8 @@ class MedicamentController extends Controller
 			
 			if ($form->isValid()) { 				// pregunta si el objeto $medicamento posee datos validos
 				
-				$var = $form->get('inventario')->getData();
 				
-				$medicamento->setInventarios($var);
+				//$var = $form->get('inventario')->getData();
 				
 				$em = $this->getDoctrine()->getManager();
 				
@@ -385,5 +386,10 @@ class MedicamentController extends Controller
 			'url' => $url,
 			'form' => $form->createView()
 		));
+	}
+	
+	public function reportsAction()
+	{
+		return $this->render('DrugstorePrincipalBundle:Medicament:reports.html.twig');
 	}
 }

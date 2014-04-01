@@ -1,0 +1,109 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}LaFamácia | Generar reportes{% endblock %}
+
+{% block body %}
+
+	<h1 class="fi-magnifying-glass size-45"> Buscar por:</h1>
+	
+	<div class="row">
+		<div class="large-6 small-6 columns">
+		  <label><input type="checkbox" id="checkbox1"><span class="custom checkbox"></span> Todos</label> <input type="text" id="texto1" name="" placeholder="Escriba aquí">
+		  <label><input type="checkbox" id="checkbox2"><span class="custom checkbox"></span> Nombre medicamento</label> <input type="text" id="texto2" name="" placeholder="Escriba aquí">
+		  <label><input type="checkbox" id="checkbox3"><span class="custom checkbox"></span> Laboratorio</label> <input type="text" id="texto3" name="" placeholder="Escriba aquí">
+		  <label><input type="checkbox" id="checkbox4"><span class="custom checkbox"></span> Principio(s) activo(s)</label> <input type="text" id="texto4" name="" placeholder="Escriba aquí">
+		  <label><input type="checkbox" id="checkbox5"><span class="custom checkbox"></span> Tipo presentación</label> <input type="text" id="texto5" name="" placeholder="Escriba aquí">
+		  <label><input type="checkbox" id="checkbox6"><span class="custom checkbox"></span> Lote</label> <input type="text" id="texto6" name="" placeholder="Escriba aquí">
+		  <label><input type="checkbox" id="checkbox7"><span class="custom checkbox"></span> Fecha emisión</label> <input type="text" id="texto7" name="" placeholder="Escriba aquí">
+		  <label><input type="checkbox" id="checkbox8"><span class="custom checkbox"></span> Fecha vencimiento</label> <input type="text" id="texto8" name="" placeholder="Escriba aquí">
+		  <label><input type="checkbox" id="checkbox9"><span class="custom checkbox"></span> Llegaron a stock mínimo</label> <input type="text" id="texto9" name="" placeholder="Escriba aquí">
+		  <label><input type="checkbox" id="checkbox10"><span class="custom checkbox"></span> Agotados</label> <input type="text" id="texto10" name="" placeholder="Escriba aquí">
+		</div>
+    </div><br>
+    <a href="#" class="small button">Aceptar</a>
+
+{% endblock %}
+
+{% block javascripts %}
+	{{ parent() }}
+	<script>
+		$(document).ready(function(){
+			$('#texto1').hide();
+			$('#texto2').hide();
+			$('#texto3').hide();
+			$('#texto4').hide();
+			$('#texto5').hide();
+			$('#texto6').hide();
+			$('#texto7').hide();
+			$('#texto8').hide();
+			$('#texto9').hide();
+			$('#texto10').hide();
+			
+			$('#checkbox2').click(function(){
+				if($('#checkbox2').is(':checked'))
+				{
+					$('#texto2').show();
+				}else $('#texto2').hide();
+			});
+			
+			$('#checkbox3').click(function(){
+				if($('#checkbox3').is(':checked'))
+				{
+					$('#texto3').show();
+				}else $('#texto3').hide();
+			});
+			
+			$('#checkbox4').click(function(){
+				if($('#checkbox4').is(':checked'))
+				{
+					$('#texto4').show();
+				}else $('#texto4').hide();
+			});
+			
+			$('#checkbox5').click(function(){
+				if($('#checkbox5').is(':checked'))
+				{
+					$('#texto5').show();
+				}else $('#texto5').hide();
+			});
+			
+			$('#checkbox6').click(function(){
+				if($('#checkbox6').is(':checked'))
+				{
+					$('#texto6').show();
+				}else $('#texto6').hide();
+			});
+			
+			$('#checkbox7').click(function(){
+				if($('#checkbox7').is(':checked'))
+				{
+					$('#texto7').show();
+				}else $('#texto7').hide();
+			});
+			
+			$('#checkbox8').click(function(){
+				if($('#checkbox8').is(':checked'))
+				{
+					$('#texto8').show();
+				}else $('#texto8').hide();
+			});
+			
+			$('#checkbox9').click(function(){
+				if($('#checkbox9').is(':checked'))
+				{
+					$('#texto9').show();
+				}else $('#texto9').hide();
+			});
+			
+			$('#checkbox10').click(function(){
+				if($('#checkbox10').is(':checked'))
+				{
+					$('#texto10').show();
+				}else $('#texto10').hide();
+			});
+			
+		});
+	</script>
+	
+	
+{% endblock %}

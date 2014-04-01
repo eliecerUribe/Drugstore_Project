@@ -35,3 +35,7 @@ drugstore_medicament_edit_stock:
     defaults: { _controller: DrugstorePrincipalBundle:Medicament:editStock }
     requirements:
         id:  \d+
+
+drugstore_medicament_reports:
+    pattern:  /reports
+    defaults: { _controller: DrugstorePrincipalBundle:Medicament:reports }

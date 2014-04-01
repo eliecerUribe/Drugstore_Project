@@ -1,7 +1,5 @@
 {% extends '::base.html.twig' %}
 
-{% block title %}LaFamácia | Alta de medicamento{% endblock %}
-
 {% block body %}
 	<h1>Agregar <small>Medicamento.</small></h1>
 	<label style="color:#3366FF;"><b>(*) Específico únicamente para bienes masivos</b></label><br>
@@ -10,7 +8,7 @@
 		
 	{{ form_errors(form) }}
 		<div class="row">
-			<div id="select" class="large-6 small-6 columns">
+			<div class="large-6 small-6 columns">
 				
 				{# <label>Inventario:</label>
 				<select id="customDropdown1" name="inventario">
@@ -23,15 +21,7 @@
 				</select> #}
 				{{ form_label(form.inventario, 'Inventario:') }}
 				{{ form_errors(form.inventario) }}
-				{{ form_widget(form.inventario, {'attr': {'id': 'inventario'}}) }}
-			</div>
-			
-			<div id="serie" class="large-6 small-6 columns">
-			
-				{{ form_label(form.numSerie, 'Número de serie:')}}
-				{{ form_errors(form.numSerie) }}
-				{{ form_widget(form.numSerie, {'attr': {'id': 'numSerie'}}) }}
-			
+				{{ form_widget(form.inventario) }}
 			</div>
 			
 		</div>
@@ -149,11 +139,23 @@
 {% block javascripts %}
 	{{ parent() }}
 		$(document).ready(function(){
-			$('#select').click(function(){
-				//var valor = $('#select').attr('id').val();
-				
-					$('#serie').attr('id').fadeOut();
-				
+			$('#customDropdown1').click(function(){
+				var valor = $('#customDropdown1').val();
+				if(valor==1){
+					$('div#serie').fadeOut();
+					$('div#numLote').fadeOut();
+					$('div#fechaE').fadeOut();
+					$('div#fechaV').fadeOut();
+					$('div#cantidad').fadeOut();
+					}
+				else
+				{
+					$('div#serie').show();
+					$('div#numLote').show();
+					$('div#fechaE').show();
+					$('div#fechaV').show();
+					$('div#cantidad').show();
+				}
 			});
 		});
 	</script>

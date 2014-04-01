@@ -19,6 +19,7 @@ class Inventory
 	
 	/**
 	 * @ORM\Column(type="string", length=30)
+	 * @var string $descripcion
 	 */
 	protected $descripcion;
 	
@@ -47,6 +48,11 @@ class Inventory
 	{
 		$this->medicamentos = new ArrayCollection();
 	}
+	
+	public function __toString()
+    {
+        return $this->descripcion;
+    }
 	
 	public function getMedicamentos()
 	{
