@@ -39,3 +39,4 @@ drugstore_medicament_edit_stock:
 drugstore_medicament_reports:
     pattern:  /reports
     defaults: { _controller: DrugstorePrincipalBundle:Medicament:reports }
+
