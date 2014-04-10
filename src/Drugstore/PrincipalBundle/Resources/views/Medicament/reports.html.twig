@@ -4,48 +4,47 @@
 
 {% block body %}
 
-	<h1 class="fi-magnifying-glass size-45"> Buscar por:</h1>
-	{{ form_start(form, {'attr': {'class': ''}}) }}
+	<h1 class="fi-magnifying-glass size-45"> Buscar medicamento por:</h1>
+	{{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
 	{{ form_errors(form) }}
 	<div class="row">
 		<div class="large-6 small-6 columns">
-		  <label><input type="checkbox" id="checkbox1"><span class="custom checkbox"></span> Todos</label>
+		  {# input type="checkbox" id="form_select1" name="form[select1]"><span class="custom checkbox"></span> #}
+		  
+		  {{ form_errors(form.select1) }}
+		  <label> {{ form_widget(form.select1) }} Todos</label>
+		  {{ form_errors(form.select2) }}
+		  <label> {{ form_widget(form.select2) }} Agotados</label>
+		  {{ form_errors(form.select3) }}
+		  <label> {{ form_widget(form.select3) }} Llegaron a stock mínimo</label>
 		  <label><input type="checkbox" id="checkbox2"><span class="custom checkbox"></span> Nombre medicamento</label>
 		  {{ form_label(form.texto2, ' ')}}
 		  {{ form_errors(form.texto2) }}
-		  {{ form_widget(form.texto2) }}
+		  {{ form_widget(form.texto2, {'attr': {'placeholder': 'Escriba aquí'}}) }}
 		  <label><input type="checkbox" id="checkbox3"><span class="custom checkbox"></span> Laboratorio</label>
 		  {{ form_label(form.texto3, ' ')}}
 		  {{ form_errors(form.texto3) }}
-		  {{ form_widget(form.texto3) }}
+		  {{ form_widget(form.texto3, {'attr': {'placeholder': 'Escriba aquí'}}) }}
 		  <label><input type="checkbox" id="checkbox4"><span class="custom checkbox"></span> Principio(s) activo(s)</label>
 		  {{ form_label(form.texto4, ' ')}}
 		  {{ form_errors(form.texto4) }}
-		  {{ form_widget(form.texto4) }}
+		  {{ form_widget(form.texto4, {'attr': {'placeholder': 'Escriba aquí'}}) }}
 		  <label><input type="checkbox" id="checkbox5"><span class="custom checkbox"></span> Tipo presentación</label>
 		  {{ form_label(form.texto5, ' ')}}
 		  {{ form_errors(form.texto5) }}
-		  {{ form_widget(form.texto5) }}
+		  {{ form_widget(form.texto5, {'attr': {'placeholder': 'Escriba aquí'}}) }}
 		  <label><input type="checkbox" id="checkbox6"><span class="custom checkbox"></span> Lote</label>
 		  {{ form_label(form.texto6, ' ')}}
 		  {{ form_errors(form.texto6) }}
-		  {{ form_widget(form.texto6) }}
+		  {{ form_widget(form.texto6, {'attr': {'placeholder': 'Escriba aquí'}}) }}
 		  <label><input type="checkbox" id="checkbox7"><span class="custom checkbox"></span> Fecha emisión</label> 
 		  {{ form_label(form.texto7, ' ')}}
 		  {{ form_errors(form.texto7) }}
-		  {{ form_widget(form.texto7) }}
+		  {{ form_widget(form.texto7, {'attr': {'placeholder': 'Escriba aquí'}}) }}
 		  <label><input type="checkbox" id="checkbox8"><span class="custom checkbox"></span> Fecha vencimiento</label> 
 		  {{ form_label(form.texto8, ' ')}}
 		  {{ form_errors(form.texto8) }}
-		  {{ form_widget(form.texto8) }}
-		  <label><input type="checkbox" id="checkbox9"><span class="custom checkbox"></span> Llegaron a stock mínimo</label> 
-		  {{ form_label(form.texto9, ' ')}}
-		  {{ form_errors(form.texto9) }}
-		  {{ form_widget(form.texto9) }}
-		  <label><input type="checkbox" id="checkbox10"><span class="custom checkbox"></span> Agotados</label>
-		  {{ form_label(form.texto10, ' ')}}
-		  {{ form_errors(form.texto10) }}
-		  {{ form_widget(form.texto10) }}
+		  {{ form_widget(form.texto8, {'attr': {'placeholder': 'Escriba aquí'}}) }}
 		</div>
     </div><br>
     <input type="submit" class="small button" value="Aceptar" />
