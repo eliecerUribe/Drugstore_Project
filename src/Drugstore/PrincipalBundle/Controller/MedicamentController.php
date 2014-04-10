@@ -395,24 +395,82 @@ class MedicamentController extends Controller
 		$em = $this->getDoctrine()->getManager();
 		
 		$form = $this->createFormBuilder()
-        ->add('texto2', 'text')
-        ->add('texto3', 'text')
-        ->add('texto4', 'text')
-        ->add('texto5', 'text')
-        ->add('texto6', 'text')
-        ->add('texto7', 'text')
-        ->add('texto8', 'text')
-        ->add('texto9', 'text')
-        ->add('texto10', 'text')
+        ->add('select1', 'checkbox')		//Todos.
+        ->add('select2', 'checkbox')		//Agotados.
+        ->add('select3', 'checkbox')		//Llegaron a stock minimo.
+        ->add('texto2', 'text')				//Nombre.
+        ->add('texto3', 'text')				//laboratorio.
+        ->add('texto4', 'text')				//Principio(s) activo(s).
+        ->add('texto5', 'text')				//Tipo de Presentación.
+        ->add('texto6', 'text')				//Lote.
+        ->add('texto7', 'text')				//Fecha Emisión.
+        ->add('texto8', 'text')				//Fecha Vencimiento.
         ->getForm();
 		
 		if ($request->isMethod('POST')) {
 			
-			//$form->bind($request); 
+			$form->bind($request); 
 			
-			//if ($form->isValid()) { 
+			if ($form->isValid()) {
 				
-			//}
+				if($form->get('select1')->getData()) {
+					
+					$medicamentos = $em->getRepository('DrugstorePrincipalBundle:Medicament')->findAll();
+				}
+				else if($form->get('select2')->getData()){
+				
+					$query = $em->createQuery("SELECT a FROM DrugstorePrincipalBundle:Medicament a WHERE a.cantidad = 0");
+				
+					$medicamentos = $query->getResult();
+				}
+				else if($form->get('select3')->getData()){
+				
+					$query = $em->createQuery("SELECT a FROM DrugstorePrincipalBundle:Medicament a WHERE a.cantidad <= a.stockMinimo");
+				
+					$medicamentos = $query->getResult();
+				}
+				else{
+				
+					$nombre = $form->get('texto2')->getData();
+					
+					$laboratorio = $form->get('texto3')->getData();
+					
+					$pa = $form->get('texto4')->getData();
+					
+					$presentacion = $form->get('texto5')->getData();
+					
+					$lote = $form->get('texto6')->getData();
+					
+					$fechaEmision = $form->get('texto7')->getData();
+					
+					$fechaVencimiento = $form->get('texto8')->getData();
+					
+					$query = $em->createQuery("SELECT a
+											   FROM DrugstorePrincipalBundle:Medicament a
+											   WHERE
+											   a.nombre = ?2 or a.nombre = '' and a.laboratorio = ?3 or a.laboratorio='' and
+											   a.tipoPresentacion = ?5 or a.tipoPresentacion = '' and a.numLote = ?6 or a.numLote ='' and
+											   a.fechaEmision = ?7 or a.fechaEmision = '' and a.fechaVencimiento = ?8 or and a.fechaVencimiento =''");
+					
+					$query->setParameter('2', $nombre);
+					
+					$query->setParameter('3', $laboratorio);
+					
+					$query->setParameter('5', $presentacion);
+					
+					$query->setParameter('6', $lote);
+					
+					$query->setParameter('7', $fechaEmision);
+					
+					$query->setParameter('8', $fechaVencimiento);
+					
+					$medicamentos = $query->getResult();
+				}
+				
+				return $this->render('DrugstorePrincipalBundle:Medicament:showReports.html.twig', array(
+					'medicamentos' => $medicamentos,
+				));
+			}
 		}
 		return $this->render('DrugstorePrincipalBundle:Medicament:reports.html.twig', array(
 			'form' => $form->createView(),
