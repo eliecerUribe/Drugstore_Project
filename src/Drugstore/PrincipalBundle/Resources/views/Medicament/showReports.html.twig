@@ -1,0 +1,23 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}LaFamácia | Mostrando resultados de consulta{% endblock %}
+
+{% block body %}
+
+<h1>Listado de Medicamentos</h1>
+<table border="1">
+    <tr>
+        <th>ID</th>
+        <th>Nombre</th>
+        <th>Laboratorio</th>
+    </tr>
+    {% for medicamento in medicamentos %}
+    <tr>
+        <td>{{ medicamento.id }}</td>
+        <td>{{ medicamento.nombre }}</td>
+        <td>{{ medicamento.laboratorio }}</td>
+    </tr>
+    {% endfor %}
+</table>
+
+{% endblock %}
