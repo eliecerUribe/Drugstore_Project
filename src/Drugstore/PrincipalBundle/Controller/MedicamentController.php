@@ -403,8 +403,12 @@ class MedicamentController extends Controller
         ->add('texto4', 'text')				//Principio(s) activo(s).
         ->add('texto5', 'text')				//Tipo de Presentación.
         ->add('texto6', 'text')				//Lote.
-        ->add('texto7', 'text')				//Fecha Emisión.
-        ->add('texto8', 'text')				//Fecha Vencimiento.
+        ->add('texto7', 'date', array(
+				'widget' => 'single_text',
+				))							//Fecha Emisión.
+        ->add('texto8', 'date', array(
+				'widget' => 'single_text',
+				))							//Fecha Vencimiento.
         ->getForm();
 		
 		if ($request->isMethod('POST')) {
@@ -445,12 +449,10 @@ class MedicamentController extends Controller
 					
 					$fechaVencimiento = $form->get('texto8')->getData();
 					
-					$query = $em->createQuery("SELECT a
+					/*$query = $em->createQuery("SELECT a
 											   FROM DrugstorePrincipalBundle:Medicament a
 											   WHERE
-											   a.nombre = ?2 or a.nombre = '' and a.laboratorio = ?3 or a.laboratorio='' and
-											   a.tipoPresentacion = ?5 or a.tipoPresentacion = '' and a.numLote = ?6 or a.numLote ='' and
-											   a.fechaEmision = ?7 or a.fechaEmision = '' and a.fechaVencimiento = ?8 or and a.fechaVencimiento =''");
+											   ");
 					
 					$query->setParameter('2', $nombre);
 					
@@ -460,10 +462,39 @@ class MedicamentController extends Controller
 					
 					$query->setParameter('6', $lote);
 					
-					$query->setParameter('7', $fechaEmision);
+					//$query->setParameter('7', $fechaEmision);
 					
-					$query->setParameter('8', $fechaVencimiento);
+					//$query->setParameter('8', $fechaVencimiento);
 					
+					$medicamentos = $query->getResult();*/
+					
+					$qb = $em->createQueryBuilder();
+					
+					/*$qb->select('a')
+						  ->from('DrugstorePrincipalBundle:Medicament', 'a')
+						  ->where("a.nombre = ?2 or a.nombre = NULL and a.laboratorio = ?3")
+						  ->setParameter('2', $nombre)
+						  ->setParameter('3', $laboratorio);
+						  //->setParameter('5', $presentacion)
+						  //->setParameter('6', $lote)
+						  //->setParameter('7', $fechaEmision)
+						  //->setParameter('8', $fechaVencimiento);
+					 and   a.laboratorio = ?3 or a.laboratorio= '' and $qb->expr()->isNull(?2)
+								   a.tipoPresentacion = ?5 or a.tipoPresentacion = '' and a.numLote = ?6 or a.numLote = '' and
+								   a.fechaEmision = ?7 or a.fechaEmision = '' and a.fechaVencimiento = ?8 or a.fechaVencimiento = ''*/
+					$nombre = '';
+					$qb->add('select', 'a')
+					   ->add('from', 'DrugstorePrincipalBundle:Medicament a')
+					   ->add('where', "(a.nombre = ?2 or ?2 = '') and
+									   (a.laboratorio = ?3 or ?3 = '')  and 
+									   (a.fechaEmision = ?7 or ?7 = '') 
+									   ")
+					   ->setParameter('2', $nombre)
+					   ->setParameter('3', $laboratorio)
+					   ->setParameter('7', $fechaEmision);
+					
+					$query = $qb->getQuery();
+						  
 					$medicamentos = $query->getResult();
 				}
 				
