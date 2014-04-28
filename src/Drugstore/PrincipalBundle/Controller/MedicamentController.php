@@ -417,81 +417,79 @@ class MedicamentController extends Controller
 			
 			if ($form->isValid()) {
 				
+				$agotados = $llegaronSM = 0;
+				
+				if($form->get('select2')->getData()){
+					
+					$agotados = 1;
+				
+					//$query = $em->createQuery("SELECT a FROM DrugstorePrincipalBundle:Medicament a WHERE a.cantidad = 0");
+				
+					//$medicamentos = $query->getResult();
+				}
+				 if($form->get('select3')->getData()){
+					
+					$llegaronSM = 1;
+				
+					//$query = $em->createQuery("SELECT a FROM DrugstorePrincipalBundle:Medicament a WHERE a.cantidad <= a.stockMinimo");
+				
+					//$medicamentos = $query->getResult();
+				}
 				if($form->get('select1')->getData()) {
 					
 					$medicamentos = $em->getRepository('DrugstorePrincipalBundle:Medicament')->findAll();
-				}
-				else if($form->get('select2')->getData()){
-				
-					$query = $em->createQuery("SELECT a FROM DrugstorePrincipalBundle:Medicament a WHERE a.cantidad = 0");
-				
-					$medicamentos = $query->getResult();
-				}
-				else if($form->get('select3')->getData()){
-				
-					$query = $em->createQuery("SELECT a FROM DrugstorePrincipalBundle:Medicament a WHERE a.cantidad <= a.stockMinimo");
-				
-					$medicamentos = $query->getResult();
 				}
 				else{
 				
 					$nombre = $form->get('texto2')->getData();
 					
+					if(empty($nombre)) $nombre = '';
+					
 					$laboratorio = $form->get('texto3')->getData();
+					
+					if(empty($laboratorio)) $laboratorio = '';
 					
 					$pa = $form->get('texto4')->getData();
 					
+					if(empty($pa)) $pa = '';
+					
 					$presentacion = $form->get('texto5')->getData();
+					
+					if(empty($presentacion)) $presentacion = '';
 					
 					$lote = $form->get('texto6')->getData();
 					
+					if(empty($lote)) $lote = '';
+					
 					$fechaEmision = $form->get('texto7')->getData();
+					
+					if(empty($fechaEmision)) $fechaEmision = '';
 					
 					$fechaVencimiento = $form->get('texto8')->getData();
 					
-					/*$query = $em->createQuery("SELECT a
-											   FROM DrugstorePrincipalBundle:Medicament a
-											   WHERE
-											   ");
-					
-					$query->setParameter('2', $nombre);
-					
-					$query->setParameter('3', $laboratorio);
-					
-					$query->setParameter('5', $presentacion);
-					
-					$query->setParameter('6', $lote);
-					
-					//$query->setParameter('7', $fechaEmision);
-					
-					//$query->setParameter('8', $fechaVencimiento);
-					
-					$medicamentos = $query->getResult();*/
+					if(empty($fechaVencimiento)) $fechaVencimiento = '';
 					
 					$qb = $em->createQueryBuilder();
 					
-					/*$qb->select('a')
-						  ->from('DrugstorePrincipalBundle:Medicament', 'a')
-						  ->where("a.nombre = ?2 or a.nombre = NULL and a.laboratorio = ?3")
-						  ->setParameter('2', $nombre)
-						  ->setParameter('3', $laboratorio);
-						  //->setParameter('5', $presentacion)
-						  //->setParameter('6', $lote)
-						  //->setParameter('7', $fechaEmision)
-						  //->setParameter('8', $fechaVencimiento);
-					 and   a.laboratorio = ?3 or a.laboratorio= '' and $qb->expr()->isNull(?2)
-								   a.tipoPresentacion = ?5 or a.tipoPresentacion = '' and a.numLote = ?6 or a.numLote = '' and
-								   a.fechaEmision = ?7 or a.fechaEmision = '' and a.fechaVencimiento = ?8 or a.fechaVencimiento = ''*/
-					$nombre = '';
 					$qb->add('select', 'a')
 					   ->add('from', 'DrugstorePrincipalBundle:Medicament a')
 					   ->add('where', "(a.nombre = ?2 or ?2 = '') and
-									   (a.laboratorio = ?3 or ?3 = '')  and 
-									   (a.fechaEmision = ?7 or ?7 = '') 
-									   ")
+									   (a.laboratorio = ?3 or ?3 = '')  and
+									   (a.tipoPresentacion = ?5 or ?5 = '') and
+									   (a.numLote = ?6 or ?6 = '') and
+									   (a.fechaEmision = ?7 or ?7 = '') and
+									   (a.fechaVencimiento = ?8 or ?8 = '') and
+									   (a.cantidad = 0 or ?9 = 0) and
+									   (a.cantidad <= a.stockMinimo or ?10 = 0) "
+							)
 					   ->setParameter('2', $nombre)
 					   ->setParameter('3', $laboratorio)
-					   ->setParameter('7', $fechaEmision);
+					   ->setParameter('5', $presentacion)
+					   ->setParameter('6', $lote)
+					   ->setParameter('7', $fechaEmision)
+					   ->setParameter('8', $fechaVencimiento)
+					   ->setParameter('9', $agotados)
+					   ->setParameter('10', $llegaronSM);
 					
 					$query = $qb->getQuery();
 						  
