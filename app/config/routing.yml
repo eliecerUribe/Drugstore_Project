@@ -1,4 +1,13 @@
+drugstore_user:
+    resource: "@DrugstoreUserBundle/Resources/config/routing.yml"
+    prefix:   /user
+
 drugstore_principal:
     resource: "@DrugstorePrincipalBundle/Resources/config/routing.yml"
     prefix:   /
 
+login:
+    path:     /login
+    defaults: { _controller: DrugstoreUserBundle:User:login }
+login_check:
+    path: /login_check

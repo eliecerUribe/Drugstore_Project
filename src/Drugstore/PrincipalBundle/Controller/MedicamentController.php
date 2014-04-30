@@ -417,24 +417,10 @@ class MedicamentController extends Controller
 			
 			if ($form->isValid()) {
 				
-				$agotados = $llegaronSM = 0;
-				
-				if($form->get('select2')->getData()){
+				$agotados = ($form->get('select2')->getData()) ? 1 : 0;
 					
-					$agotados = 1;
-				
-					//$query = $em->createQuery("SELECT a FROM DrugstorePrincipalBundle:Medicament a WHERE a.cantidad = 0");
-				
-					//$medicamentos = $query->getResult();
-				}
-				 if($form->get('select3')->getData()){
+				$llegaronSM = ($form->get('select3')->getData()) ? 1 : 0;
 					
-					$llegaronSM = 1;
-				
-					//$query = $em->createQuery("SELECT a FROM DrugstorePrincipalBundle:Medicament a WHERE a.cantidad <= a.stockMinimo");
-				
-					//$medicamentos = $query->getResult();
-				}
 				if($form->get('select1')->getData()) {
 					
 					$medicamentos = $em->getRepository('DrugstorePrincipalBundle:Medicament')->findAll();
