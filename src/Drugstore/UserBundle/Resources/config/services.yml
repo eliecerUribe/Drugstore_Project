@@ -1,0 +1,7 @@
+parameters:
+#    drugstore_user.example.class: Drugstore\UserBundle\Example
+
+services:
+#    drugstore_user.example:
+#        class: %drugstore_user.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]
