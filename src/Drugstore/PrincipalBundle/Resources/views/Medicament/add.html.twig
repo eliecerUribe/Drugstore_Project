@@ -4,11 +4,13 @@
 
 {% block body %}
 	<h1>Agregar <small>Medicamento.</small></h1>
-	<label style="color:#3366FF;"><b>(*) Específico únicamente para bienes masivos</b></label><br>
 	
+	<label style="color:#3366FF;"><b>(*) Campos específicos únicamente para bienes masivos</b></label><br>
+
 	{{ form_start(form, {'attr': {'class': 'custom', 'novalidate': 'novalidate'}}) }}
 		
 	{{ form_errors(form) }}
+	
 		<div class="row">
 			<div id="select" class="large-6 small-6 columns">
 				
@@ -23,14 +25,14 @@
 				</select> #}
 				{{ form_label(form.inventario, 'Inventario:') }}
 				{{ form_errors(form.inventario) }}
-				{{ form_widget(form.inventario, {'attr': {'id': 'inventario'}}) }}
+				{{ form_widget(form.inventario) }}
 			</div>
 			
 			<div id="serie" class="large-6 small-6 columns">
 			
 				{{ form_label(form.numSerie, 'Número de serie:')}}
 				{{ form_errors(form.numSerie) }}
-				{{ form_widget(form.numSerie, {'attr': {'id': 'numSerie'}}) }}
+				{{ form_widget(form.numSerie) }}
 			
 			</div>
 			
@@ -148,13 +150,11 @@
 
 {% block javascripts %}
 	{{ parent() }}
+	<script>
 		$(document).ready(function(){
-			$('#select').click(function(){
-				//var valor = $('#select').attr('id').val();
-				
-					$('#serie').attr('id').fadeOut();
-				
-			});
+		$('#form_inventario').click(function(){
+					$("div#serie").hide();
+		});
 		});
 	</script>
 	

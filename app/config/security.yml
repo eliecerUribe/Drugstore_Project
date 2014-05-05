@@ -1,17 +1,17 @@
 security:
     encoders:
-        Symfony\Component\Security\Core\User\User: plaintext
+        Drugstore\UserBundle\Entity\User:
+            algorithm: sha512
+            encode-as-base64: true
+            iterations: 10
 
-    role_hierarchy:
-        ROLE_ADMIN:       ROLE_USER
-        ROLE_SUPER_ADMIN: [ROLE_USER, ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
+    #role_hierarchy:
+     #   ROLE_ADMIN:       ROLE_USER
+      #  ROLE_SUPER_ADMIN: [ROLE_USER, ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
 
     providers:
-        in_memory:
-            memory:
-                users:
-                    user:  { password: userpass, roles: [ 'ROLE_USER' ] }
-                    admin: { password: adminpass, roles: [ 'ROLE_ADMIN' ] }
+        user_db:
+            entity: { class: Drugstore\UserBundle\Entity\User, property: username }
 
     firewalls:
         dev:
@@ -19,20 +19,25 @@ security:
             security: false
 
         login:
-            pattern:  ^/demo/secured/login$
+            pattern:  ^/login$
             security: false
 
         secured_area:
             pattern:    ^/
             form_login:
-                check_path: login_check
-                login_path: login
+                check_path: /login_check
+                login_path: /login
             logout:
-                path:   _demo_logout
-                target: _demo
-            anonymous: ~
+                path:   /logout
+                target: /
+            #anonymous: ~
             #http_basic:
-            #    realm: "Secured Demo Area"
+                #realm: "Introduzca Usuario y Contraseña"
 
     access_control:
+        #- { path: ^/, roles: ROLE_ADMIN }
+        - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        #- { path: /user, roles: ROLE_USER }
+        - { path: ^/admin, roles: ROLE_ADMIN }
+        - { path: /.*, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         #- { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }

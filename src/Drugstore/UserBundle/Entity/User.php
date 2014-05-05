@@ -23,28 +23,33 @@ class User implements UserInterface, \Serializable
 	private $id;
 	
 	/**
-     * @ORM\Column(type="string", length=25, unique=true)
+     * @ORM\Column(type="string", length=255, unique=true)
      */
 	private $username;
 	
 	/**
-     * @ORM\Column(type="string", length=64)
+     * @ORM\Column(type="string", length=255)
      */
 	private $password;
 	
 	/**
-     * @ORM\Column(type="string", length=60, unique=true)
+     * @ORM\Column(type="string", length=255)
      */
-	private $email;
+	private $salt;
 	
 	/**
-     * @ORM\Column(name="is_active", type="boolean")
+     * se utilizó user_roles para no hacer conflicto al aplicar ->toArray en getRoles()
+     * @ORM\ManyToMany(targetEntity="Role")
+     * @ORM\JoinTable(name="user_role",
+     *     joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")},
+     *     inverseJoinColumns={@ORM\JoinColumn(name="role_id", referencedColumnName="id")}
+     * )
      */
-	private $isActive;
+     protected $user_roles;
 	
 	public function __construct()
     {
-        $this->isActive = true;
+        $this->user_roles = new \Doctrine\Common\Collections\ArrayCollection();
         // may not be needed, see section on salt below
         // $this->salt = md5(uniqid(null, true));
     }
@@ -80,7 +85,7 @@ class User implements UserInterface, \Serializable
      */
     public function getRoles()
     {
-        return array('ROLE_USER');
+        return $this->user_roles->toArray();
     }
 
     /**
@@ -153,50 +158,50 @@ class User implements UserInterface, \Serializable
 
         return $this;
     }
-
+    
     /**
-     * Set email
+     * Compares this user to another to determine if they are the same.
      *
-     * @param string $email
-     * @return User
+     * @param UserInterface $user The user
+     * @return boolean True if equal, false othwerwise.
      */
-    public function setEmail($email)
-    {
-        $this->email = $email;
+    public function equals(UserInterface $user) {
+        return md5($this->getUsername()) == md5($user->getUsername());
 
-        return $this;
+    }
+    
+    /**
+     * Add user_roles
+     *
+     * @param Maycol\BlogBundle\Entity\Role $userRoles
+     */
+    public function addRole(\Maycol\BlogBundle\Entity\Role $userRoles)
+    {
+        $this->user_roles[] = $userRoles;
+    }
+
+    public function setUserRoles($roles) {
+        $this->user_roles = $roles;
     }
 
     /**
-     * Get email
+     * Get user_roles
      *
-     * @return string 
+     * @return Doctrine\Common\Collections\Collection
      */
-    public function getEmail()
+    public function getUserRoles()
     {
-        return $this->email;
+        return $this->user_roles;
     }
-
+    
     /**
-     * Set isActive
+     * Set salt
      *
-     * @param boolean $isActive
-     * @return User
+     * @param string $salt
      */
-    public function setIsActive($isActive)
+    public function setSalt($salt)
     {
-        $this->isActive = $isActive;
-
-        return $this;
+        $this->salt = $salt;
     }
 
-    /**
-     * Get isActive
-     *
-     * @return boolean 
-     */
-    public function getIsActive()
-    {
-        return $this->isActive;
-    }
 }

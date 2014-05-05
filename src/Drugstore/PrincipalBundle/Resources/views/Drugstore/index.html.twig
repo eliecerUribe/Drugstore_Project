@@ -6,7 +6,8 @@
 		<!-- Thumbnails -->
  
 			<div class="row">
- 
+			
+			{% if is_granted('ROLE_ADMIN') %}
             <div align="center" class="large-4 small-6 columns">
               <i class="fi-page-add size-108"></i>
  
@@ -15,17 +16,17 @@
                 <h6 class="subheader">Medicamento</h6>
               </div>
             </div>
+            {% endif %}
  
             <div align="center" class="large-4 small-6 columns">
               <i class="fi-page-delete size-108"></i>
               
- 
               <div class="panel">
                 <h5><a href="{{ path('drugstore_medicament_delete') }}">Retirar</a></h5>
                 <h6 class="subheader">Medicamento</h6>
               </div>
             </div>
- 
+			
             <div align="center" class="large-4 small-6 columns">
               <i class="fi-marker size-108"></i>
  
@@ -35,6 +36,7 @@
               </div>
             </div>
  
+            {% if is_granted('ROLE_ADMIN') %}
             <div align="center" class="large-4 small-6 columns">
               <i class="fi-map size-108"></i>
  
@@ -43,7 +45,9 @@
                 <h6 class="subheader">Medicamento</h6>
               </div>
             </div>
+            {% endif %}
  
+            {% if is_granted('ROLE_ADMIN') %}
             <div align="center" class="large-4 small-6 columns">
               <i class="fi-page-edit size-108"></i>
  
@@ -52,7 +56,8 @@
                 <h6 class="subheader">Medicamento</h6>
               </div>
             </div>
- 
+			{% endif %}
+			
             <div align="center" class="large-4 small-6 columns">
               <i class="fi-widget size-108"></i>
  

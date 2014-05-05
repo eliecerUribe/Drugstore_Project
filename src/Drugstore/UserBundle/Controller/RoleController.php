@@ -5,69 +5,65 @@ namespace Drugstore\UserBundle\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-use Drugstore\UserBundle\Entity\User;
-use Drugstore\UserBundle\Form\UserType;
+use Drugstore\UserBundle\Entity\Role;
+use Drugstore\UserBundle\Form\RoleType;
 
 /**
- * User controller.
+ * Role controller.
  *
  */
-class UserController extends Controller
+class RoleController extends Controller
 {
 
     /**
-     * Lists all User entities.
+     * Lists all Role entities.
      *
      */
     public function indexAction()
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('DrugstoreUserBundle:User')->findAll();
+        $entities = $em->getRepository('DrugstoreUserBundle:Role')->findAll();
 
-        return $this->render('DrugstoreUserBundle:User:index.html.twig', array(
+        return $this->render('DrugstoreUserBundle:Role:index.html.twig', array(
             'entities' => $entities,
         ));
     }
     /**
-     * Creates a new User entity.
+     * Creates a new Role entity.
      *
      */
     public function createAction(Request $request)
     {
-        $entity = new User();
+        $entity = new Role();
         $form = $this->createCreateForm($entity);
         $form->handleRequest($request);
 
         if ($form->isValid()) {
-			
-			//Establecemos la contraseña
-			$this->setSecurePassword($entity);
-			
             $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('user_show', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('role_show', array('id' => $entity->getId())));
         }
 
-        return $this->render('DrugstoreUserBundle:User:new.html.twig', array(
+        return $this->render('DrugstoreUserBundle:Role:new.html.twig', array(
             'entity' => $entity,
             'form'   => $form->createView(),
         ));
     }
 
     /**
-    * Creates a form to create a User entity.
+    * Creates a form to create a Role entity.
     *
-    * @param User $entity The entity
+    * @param Role $entity The entity
     *
     * @return \Symfony\Component\Form\Form The form
     */
-    private function createCreateForm(User $entity)
+    private function createCreateForm(Role $entity)
     {
-        $form = $this->createForm(new UserType(), $entity, array(
-            'action' => $this->generateUrl('user_create'),
+        $form = $this->createForm(new RoleType(), $entity, array(
+            'action' => $this->generateUrl('role_create'),
             'method' => 'POST',
         ));
 
@@ -77,59 +73,59 @@ class UserController extends Controller
     }
 
     /**
-     * Displays a form to create a new User entity.
+     * Displays a form to create a new Role entity.
      *
      */
     public function newAction()
     {
-        $entity = new User();
+        $entity = new Role();
         $form   = $this->createCreateForm($entity);
 
-        return $this->render('DrugstoreUserBundle:User:new.html.twig', array(
+        return $this->render('DrugstoreUserBundle:Role:new.html.twig', array(
             'entity' => $entity,
             'form'   => $form->createView(),
         ));
     }
 
     /**
-     * Finds and displays a User entity.
+     * Finds and displays a Role entity.
      *
      */
     public function showAction($id)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('DrugstoreUserBundle:User')->find($id);
+        $entity = $em->getRepository('DrugstoreUserBundle:Role')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find User entity.');
+            throw $this->createNotFoundException('Unable to find Role entity.');
         }
 
         $deleteForm = $this->createDeleteForm($id);
 
-        return $this->render('DrugstoreUserBundle:User:show.html.twig', array(
+        return $this->render('DrugstoreUserBundle:Role:show.html.twig', array(
             'entity'      => $entity,
             'delete_form' => $deleteForm->createView(),        ));
     }
 
     /**
-     * Displays a form to edit an existing User entity.
+     * Displays a form to edit an existing Role entity.
      *
      */
     public function editAction($id)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('DrugstoreUserBundle:User')->find($id);
+        $entity = $em->getRepository('DrugstoreUserBundle:Role')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find User entity.');
+            throw $this->createNotFoundException('Unable to find Role entity.');
         }
 
         $editForm = $this->createEditForm($entity);
         $deleteForm = $this->createDeleteForm($id);
 
-        return $this->render('DrugstoreUserBundle:User:edit.html.twig', array(
+        return $this->render('DrugstoreUserBundle:Role:edit.html.twig', array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
@@ -137,16 +133,16 @@ class UserController extends Controller
     }
 
     /**
-    * Creates a form to edit a User entity.
+    * Creates a form to edit a Role entity.
     *
-    * @param User $entity The entity
+    * @param Role $entity The entity
     *
     * @return \Symfony\Component\Form\Form The form
     */
-    private function createEditForm(User $entity)
+    private function createEditForm(Role $entity)
     {
-        $form = $this->createForm(new UserType(), $entity, array(
-            'action' => $this->generateUrl('user_update', array('id' => $entity->getId())),
+        $form = $this->createForm(new RoleType(), $entity, array(
+            'action' => $this->generateUrl('role_update', array('id' => $entity->getId())),
             'method' => 'PUT',
         ));
 
@@ -155,46 +151,37 @@ class UserController extends Controller
         return $form;
     }
     /**
-     * Edits an existing User entity.
+     * Edits an existing Role entity.
      *
      */
     public function updateAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('DrugstoreUserBundle:User')->find($id);
+        $entity = $em->getRepository('DrugstoreUserBundle:Role')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find User entity.');
+            throw $this->createNotFoundException('Unable to find Role entity.');
         }
 
         $deleteForm = $this->createDeleteForm($id);
         $editForm = $this->createEditForm($entity);
-        
-        $current_pass = $entity->getPassword();
-        
         $editForm->handleRequest($request);
-    
 
         if ($editForm->isValid()) {
-			//evalua si la contraseña fue modificada
-            if ($current_pass != $entity->getPassword()) {
-                $this->setSecurePassword($entity);
-            }
-            $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('user_edit', array('id' => $id)));
+            return $this->redirect($this->generateUrl('role_edit', array('id' => $id)));
         }
 
-        return $this->render('DrugstoreUserBundle:User:edit.html.twig', array(
+        return $this->render('DrugstoreUserBundle:Role:edit.html.twig', array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         ));
     }
     /**
-     * Deletes a User entity.
+     * Deletes a Role entity.
      *
      */
     public function deleteAction(Request $request, $id)
@@ -204,21 +191,21 @@ class UserController extends Controller
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('DrugstoreUserBundle:User')->find($id);
+            $entity = $em->getRepository('DrugstoreUserBundle:Role')->find($id);
 
             if (!$entity) {
-                throw $this->createNotFoundException('Unable to find User entity.');
+                throw $this->createNotFoundException('Unable to find Role entity.');
             }
 
             $em->remove($entity);
             $em->flush();
         }
 
-        return $this->redirect($this->generateUrl('user'));
+        return $this->redirect($this->generateUrl('role'));
     }
 
     /**
-     * Creates a form to delete a User entity by id.
+     * Creates a form to delete a Role entity by id.
      *
      * @param mixed $id The entity id
      *
@@ -227,18 +214,10 @@ class UserController extends Controller
     private function createDeleteForm($id)
     {
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl('user_delete', array('id' => $id)))
+            ->setAction($this->generateUrl('role_delete', array('id' => $id)))
             ->setMethod('DELETE')
             ->add('submit', 'submit', array('label' => 'Delete'))
             ->getForm()
         ;
     }
-    
-    private function setSecurePassword(&$entity) 
-    {
-		$entity->setSalt(md5(time()));
-		$encoder = new \Symfony\Component\Security\Core\Encoder\MessageDigestPasswordEncoder('sha512', true, 10);
-		$password = $encoder->encodePassword($entity->getPassword(), $entity->getSalt());
-		$entity->setPassword($password);
-	}
 }

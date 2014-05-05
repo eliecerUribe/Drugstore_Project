@@ -1,0 +1,30 @@
+role:
+    pattern:  /
+    defaults: { _controller: "DrugstoreUserBundle:Role:index" }
+
+role_show:
+    pattern:  /{id}/show
+    defaults: { _controller: "DrugstoreUserBundle:Role:show" }
+
+role_new:
+    pattern:  /new
+    defaults: { _controller: "DrugstoreUserBundle:Role:new" }
+
+role_create:
+    pattern:  /create
+    defaults: { _controller: "DrugstoreUserBundle:Role:create" }
+    requirements: { _method: post }
+
+role_edit:
+    pattern:  /{id}/edit
+    defaults: { _controller: "DrugstoreUserBundle:Role:edit" }
+
+role_update:
+    pattern:  /{id}/update
+    defaults: { _controller: "DrugstoreUserBundle:Role:update" }
+    requirements: { _method: post|put }
+
+role_delete:
+    pattern:  /{id}/delete
+    defaults: { _controller: "DrugstoreUserBundle:Role:delete" }
+    requirements: { _method: post|delete }

@@ -33,7 +33,7 @@
 						<ul class="title-area">
 						  <!-- Title Area -->
 						  <li class="name">
-							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="{{ path('drugstore_principal_homepage') }}"><img src="{{ asset('zurb.foundation/img/nombre.png') }}" height="220" width="180"></a>
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="{{ path('drugstore_principal_homepage') }}"><img src="{{ asset('zurb.foundation/img/logo_farma_blanco.png') }}" height="220" width="170"></a>
 							<!--<h1>
 							  <a href="#">
 								
@@ -61,10 +61,10 @@
 							  <li><a href="{{ path('drugstore_medicament_setup_stock') }}">Stock</a></li>
 							</li>
 							<li class="divider"></li>
-							  <li><a href="#">Reportes</a></li>
+							  <li><a href="{{ path('drugstore_medicament_reports') }}">Reportes</a></li>
 							</li>
 							<li class="divider"></li>
-							<li><a href="#">Contactanos</a></li>
+							<li><a href="{{ path('logout') }}">Cerrar Sesión</a></li>
 							
 							
 						  </ul>
@@ -84,10 +84,10 @@
 	 
 			  <div class="hide-for-small panel">
 				<h3>Header</h3>
-				<h5 class="subheader">Aplicación web que permite gestionar el proceso de inventariado de la farmacia aún sin nombre.
+				<h5 class="subheader">Aplicación web que permite gestionar el proceso de inventariado de la FarmaCyT.
 				</h5>
 			  </div>
-	 
+			
 		</div>
 		{% endblock %}
 		
@@ -106,7 +106,7 @@
 		  <div class="row">
  
 			<div class="large-8 columns">
-			  <p>© Copyright 2014. Deseñado por Eliecer Uribe.</p>
+			  <p>© Copyright 2014. Desarrollado por Eliecer Uribe y Tulio Loreto para FarmaCyT c.a.</p>
 			</div>
  
 		  </div>
