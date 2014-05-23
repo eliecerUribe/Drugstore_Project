@@ -8,6 +8,8 @@
 			<link href="{{ asset('zurb.foundation/css/normalize.css') }}" rel='stylesheet' type='text/css'>
 			<link href="{{ asset('zurb.foundation/css/foundation.min.css') }}" rel='stylesheet' type='text/css'>
 			<link href="{{ asset('icons/foundation-icons.css') }}" rel="stylesheet" >
+			<link href="{{ asset('zurb.foundation/responsive-tables/responsive-tables.css') }}" type="text/css" media="screen" rel="stylesheet">
+			
          {% endblock %}
          <style>
 		  
@@ -60,9 +62,7 @@
 							<li class="divider"></li>
 							  <li><a href="{{ path('drugstore_medicament_setup_stock') }}">Stock</a></li>
 							</li>
-							<li class="divider"></li>
-							  <li><a href="{{ path('drugstore_medicament_reports') }}">Reportes</a></li>
-							</li>
+							
 							<li class="divider"></li>
 							<li><a href="{{ path('logout') }}">Cerrar Sesión</a></li>
 							
@@ -117,6 +117,7 @@
       
     </body>
     {% block javascripts %}
+			<script  src="{{ asset('zurb.foundation/responsive-tables/responsive-tables.js') }}" type="text/javascript"></script>
 			<script src="{{ asset('js/jquery-1.11.0.js') }}"></script>
 			
 		    {% javascripts '@DrugstorePrincipalBundle/Resources/public/zurb.foundation/js/vendor/custom.modernizr.js'

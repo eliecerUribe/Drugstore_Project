@@ -5,7 +5,7 @@
 {% block body %}
 	<h1>Agregar <small>Medicamento.</small></h1>
 	
-	<label style="color:#3366FF;"><b>(*) Campos específicos únicamente para bienes masivos</b></label><br>
+	<label style="color:#3366FF;"><b>(*) Campos adicionales únicamente para bienes masivos</b></label><br>
 
 	{{ form_start(form, {'attr': {'class': 'custom', 'novalidate': 'novalidate'}}) }}
 		
@@ -48,7 +48,7 @@
 			</div>
 			<div class="large-6 small-6 columns">
 			
-				{{ form_label(form.precioUnitario, 'Precio unitario:') }}
+				{{ form_label(form.precioUnitario, 'Precio unitario (Bs):') }}
 				{{ form_errors(form.precioUnitario) }}
 				{{ form_widget(form.precioUnitario, {'attr': {'placeholder': 'Ingrese precio unitario de medicamento'}}) }}
 			
@@ -93,7 +93,7 @@
 			
 			<div class="large-6 small-6 columns">
 			
-				{{ form_label(form.numDosis, 'Número de dosis:') }}
+				{{ form_label(form.numDosis, 'Número de dosis (mg):') }}
 				{{ form_errors(form.numDosis) }}
 				{{ form_widget(form.numDosis, {'attr': {'placeholder': 'Ingrese número de dosis'}}) }}
 			
@@ -151,11 +151,16 @@
 {% block javascripts %}
 	{{ parent() }}
 	<script>
-		$(document).ready(function(){
-		$('#form_inventario').click(function(){
-					$("div#serie").hide();
-		});
-		});
+		//$(document).ready(function(){
+		//$('div#select').click(function(){
+			//valor = $('{{ form.vars.value.inventario }}').val();
+			//valor = 2;
+			//if ((valor == 2) || (valor == 'Masivo') || (valor == 'masivo'))
+			//	$("div#serie").show();
+			//else
+			//	$("div#serie").hide();
+		//});
+		//});
 	</script>
 	
 	

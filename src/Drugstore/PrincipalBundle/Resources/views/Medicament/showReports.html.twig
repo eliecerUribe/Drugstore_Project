@@ -5,19 +5,30 @@
 {% block body %}
 
 <h1>Listado de Medicamentos</h1>
-<table border="1">
-    <tr>
-        <th>ID</th>
-        <th>Nombre</th>
-        <th>Laboratorio</th>
-    </tr>
-    {% for medicamento in medicamentos %}
-    <tr>
-        <td>{{ medicamento.id }}</td>
-        <td>{{ medicamento.nombre }}</td>
-        <td>{{ medicamento.laboratorio }}</td>
-    </tr>
-    {% endfor %}
-</table>
+{% if vacio %}
+	<div>"No hay respuesta a su solicitud"</div>
+{% else %}
+	<table border="1" class="responsive">
+		<tr>
+			<th>ID</th>
+			<th>Nombre</th>
+			<th>Laboratorio</th>
+			<th>Stock Mínimo</th>
+			<th>Stock Máximo</th>
+			<th>Cantidad</th>
+		</tr>
+		{% for medicamento in medicamentos %}
+		<tr>
+			<td>{{ medicamento.id }}</td>
+			<td>{{ medicamento.nombre }}</td>
+			<td>{{ medicamento.laboratorio }}</td>
+			<td>{{ medicamento.stockMinimo }}</td>
+			<td>{{ medicamento.stockMaximo }}</td>
+			<td>{{ medicamento.cantidad }}</td>
+		</tr>
+		{% endfor %}
+	</table>
+	<a class="small button" href="{{ url }}">Volver</a> <a class="small button" href="#">Guardar</a>
+{% endif %}
 
 {% endblock %}

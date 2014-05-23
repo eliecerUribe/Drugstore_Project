@@ -8,6 +8,7 @@ use Drugstore\PrincipalBundle\Entity\Medicament;
 use Drugstore\PrincipalBundle\Entity\Delete;
 use Drugstore\PrincipalBundle\Entity\Transfer;
 use Drugstore\PrincipalBundle\Entity\Inventory;
+use Drugstore\PrincipalBundle\Entity\ActiveIngredient;
 
 use Drugstore\PrincipalBundle\Form\EnquiryType;
 use Drugstore\PrincipalBundle\Form\DeleteType;
@@ -46,7 +47,10 @@ class MedicamentController extends Controller
 				if ($form->isValid()) { 				// pregunta si el objeto $medicamento posee datos validos
 					
 					
-					//$var = $form->get('inventario')->getData();
+					if($form->get('inventario')->getData() == 'Individual')
+					{
+						$medicamento->setCantidad(1);
+					}
 					
 					$em = $this->getDoctrine()->getManager();
 					
@@ -131,8 +135,48 @@ class MedicamentController extends Controller
 	
 	public function transferAction()
 	{
+		$request = $this->getRequest();
+		
 		$transfer = new Transfer();
+		
 		$form = $this->createForm(new TransferType(), $transfer);
+		
+		if($request->isMethod('POST')) {
+			
+			$form->bind($request);
+			
+			if ($form->isValid()) {
+				
+				$id_i = $form->get('idInventario')->getData();
+				
+				$nombre_m = $form->get('nombreMedicamento')->getData();
+				
+				$medicamento = $em->getRepository('DrugstorePrincipalBundle:Medicament')->findOneBy(
+								array('inventario' =>  $id_i,
+									  'nombre' => $nombre_m 
+								));
+				
+				if(!$medicamento)
+				{
+						throw $this->createNotFoundException('Unable to find specified medicament.');
+				}
+				else
+				{
+					$cantidad = $form->get('cantidad')->getData();
+					
+					$u_cedente = $form->get('unidadCedente')->getData();
+					
+					$u_destino = $form->get('unidadDestino')->getData();
+					
+					//if($medicamento->getCantidad() >= )
+					
+					//$observaciones = $form->get('observaciones')->getData();
+					
+					//$transfer->setFechaTraspaso(new \DateTime('now'));
+				}
+			
+			}
+		}
 		return $this->render('DrugstorePrincipalBundle:Medicament:transfer.html.twig', array(
 			'form' => $form->createView()
 		));
@@ -287,11 +331,6 @@ class MedicamentController extends Controller
 	{
 		$request = $this->getRequest();
 		
-		/*$form = $this->createFormBuilder()
-        ->add('stockMaximoActual', 'text')
-        ->add('stockMinimoActual', 'text')
-        ->getForm();*/
-		
 		$em = $this->getDoctrine()->getManager();
 		
 		$medicamento = $em->getRepository('DrugstorePrincipalBundle:Medicament')->find($id);
@@ -424,7 +463,11 @@ class MedicamentController extends Controller
 			->add('select3', 'checkbox')		//Llegaron a stock minimo.
 			->add('texto2', 'text')				//Nombre.
 			->add('texto3', 'text')				//laboratorio.
-			->add('texto4', 'text')				//Principio(s) activo(s).
+			->add('texto4', 'entity', array(
+				'class' => 'Drugstore\\PrincipalBundle\\Entity\\ActiveIngredient',
+				'property' => 'nombre',
+				'multiple' => true,
+			))				//Principio(s) activo(s).
 			->add('texto5', 'text')				//Tipo de Presentación.
 			->add('texto6', 'text')				//Lote.
 			->add('texto7', 'date', array(
@@ -441,74 +484,95 @@ class MedicamentController extends Controller
 				
 				if ($form->isValid()) {
 					
-					$agotados = ($form->get('select2')->getData()) ? 1 : 0;
-						
-					$llegaronSM = ($form->get('select3')->getData()) ? 1 : 0;
+					$url = $this->generateUrl('drugstore_medicament_reports');
 						
 					if($form->get('select1')->getData()) {
 						
 						$medicamentos = $em->getRepository('DrugstorePrincipalBundle:Medicament')->findAll();
 					}
 					else{
+						
+						//$requestAll = $this->getRequest()->request->all();
+						
+						//$pa = $requestAll['form']['texto4']; 				//retrieve indexed array
+						//foreach ($pa as $i) {
+							//	$arreglo[] = $i;
+							//}
+						
+						$pa = $this->getRequest()->request->get('form[texto4]', null, true);
 					
-						$nombre = $form->get('texto2')->getData();
-						
-						if(empty($nombre)) $nombre = '';
-						
-						$laboratorio = $form->get('texto3')->getData();
-						
-						if(empty($laboratorio)) $laboratorio = '';
-						
-						$pa = $form->get('texto4')->getData();
-						
-						if(empty($pa)) $pa = '';
-						
-						$presentacion = $form->get('texto5')->getData();
-						
-						if(empty($presentacion)) $presentacion = '';
-						
-						$lote = $form->get('texto6')->getData();
-						
-						if(empty($lote)) $lote = '';
-						
-						$fechaEmision = $form->get('texto7')->getData();
-						
-						if(empty($fechaEmision)) $fechaEmision = '';
-						
-						$fechaVencimiento = $form->get('texto8')->getData();
-						
-						if(empty($fechaVencimiento)) $fechaVencimiento = '';
-						
 						$qb = $em->createQueryBuilder();
-						
+							
 						$qb->add('select', 'a')
 						   ->add('from', 'DrugstorePrincipalBundle:Medicament a')
-						   ->add('where', "(a.nombre = ?2 or ?2 = '') and
-										   (a.laboratorio = ?3 or ?3 = '')  and
-										   (a.tipoPresentacion = ?5 or ?5 = '') and
-										   (a.numLote = ?6 or ?6 = '') and
-										   (a.fechaEmision = ?7 or ?7 = '') and
-										   (a.fechaVencimiento = ?8 or ?8 = '') and
-										   (a.cantidad = 0 or ?9 = 0) and
-										   (a.cantidad <= a.stockMinimo or ?10 = 0) "
-								)
-						   ->setParameter('2', $nombre)
-						   ->setParameter('3', $laboratorio)
-						   ->setParameter('5', $presentacion)
-						   ->setParameter('6', $lote)
-						   ->setParameter('7', $fechaEmision)
-						   ->setParameter('8', $fechaVencimiento)
-						   ->setParameter('9', $agotados)
-						   ->setParameter('10', $llegaronSM);
+						   ->innerJoin('a.mpa', 'p');
+					
+						if(!empty($pa))
+						{
+							$qb->andWhere('p.principioActivo in (:arreglo)')
+							   ->setParameter('arreglo', $pa);
+						}
+						if($form->get('texto2')->getData())
+						{
+							$nombre = $form->get('texto2')->getData();
+							$qb->andWhere('a.nombre = ?2')
+							   ->setParameter('2', $nombre);
+						}
+						if($form->get('texto3')->getData())
+						{
+							$laboratorio = $form->get('texto3')->getData();
+							$qb->andWhere('a.laboratorio = ?3')
+							   ->setParameter('3', $laboratorio);
+						}
+						if($form->get('texto5')->getData())
+						{
+							$presentacion = $form->get('texto5')->getData();
+							$qb->andWhere('a.tipoPresentacion = ?5')
+							   ->setParameter('5', $presentacion);
+						}
+						if($form->get('texto6')->getData())
+						{
+							$lote = $form->get('texto6')->getData();
+							$qb->andWhere('a.numLote = ?6')
+							   ->setParameter('6', $lote);
+						}
+						if($form->get('texto7')->getData())
+						{
+							$fechaEmision = $form->get('texto7')->getData();
+							$qb->andWhere('a.fechaEmision = ?7')
+							   ->setParameter('7', $fechaEmision);
+						}
+						if($form->get('texto8')->getData())
+						{
+							$fechaVencimiento = $form->get('texto8')->getData();
+							$qb->andWhere('a.fechaVencimiento = ?8')
+							   ->setParameter('7', $fechaVencimiento);
+						}
+						if($form->get('select2')->getData())
+						{
+							$qb->andWhere('a.cantidad = 0');
+						}
+						if($form->get('select3')->getData())
+						{
+							$qb->andWhere('a.cantidad <= a.stockMinimo');
+						}
+						
+						$qb->orderBy('a.laboratorio', 'ASC');
 						
 						$query = $qb->getQuery();
 							  
-						$medicamentos = $query->getResult();
+						$medicamentos = $query->getResult();					
 					}
+					if(empty($medicamentos)) 
+							$vacio = TRUE;
+						else
+							$vacio = FALSE;
 					
 					return $this->render('DrugstorePrincipalBundle:Medicament:showReports.html.twig', array(
-						'medicamentos' => $medicamentos,
-					));
+							'medicamentos' => $medicamentos,
+							'vacio'		   => $vacio,
+							'url'		   => $url,
+						));
 				}
 			}
 			return $this->render('DrugstorePrincipalBundle:Medicament:reports.html.twig', array(

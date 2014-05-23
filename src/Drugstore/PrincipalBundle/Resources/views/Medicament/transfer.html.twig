@@ -1,19 +1,46 @@
 {% extends '::base.html.twig' %}
+
+{% block title %}FarmaCyT | Traspasar medicamentos(s){% endblock %}
+
 {% block body %}
-	<h1>Traspasar <small>Medicamento.</small></h1>
-	<div>
-		<div class="large-6 small-4 columns">
-		{{ form_start(form) }}
-			{{ form_errors(form) }}
-
-			{{ form_row(form.id) }}
-
-			{{ form_rest(form) }}
-
-			<input type="submit" value="Aceptar" />
-		{{ form_end(form) }}
+	<h1>Traspasar <small>Medicamento(s).</small></h1>
+	
+	{{ form_start(form, {'attr': {'class': 'custom'}}) }}
+		
+	{{ form_errors(form) }}
+	
+	<div class="row">
+		<div class="large-6 small-8 columns">
+			{{ form_label(form.idInventario, 'Id Inventario:') }}
+			{{ form_errors(form.idInventario) }}
+			{{ form_widget(form.idInventario) }}
+			
+			{{ form_label(form.nombreMedicamento, 'Nombre de Medicamento:') }}
+			{{ form_errors(form.nombreMedicamento) }}
+			{{ form_widget(form.nombreMedicamento, {'attr': {'placeholder': 'Ingrese nombre de medicamento'}}) }}
+			
+			{{ form_label(form.cantidad, 'Cantidad:') }}
+			{{ form_errors(form.cantidad) }}
+			{{ form_widget(form.cantidad, {'attr': {'placeholder': 'Ingrese cantidad a traspasar'}}) }}
+			
+			{{ form_label(form.unidadCedente, 'Unidad Cedente:') }}
+			{{ form_errors(form.unidadCedente) }}
+			{{ form_widget(form.unidadCedente) }}
+			
+			{{ form_label(form.unidadDestino, 'Unidad Destino:') }}
+			{{ form_errors(form.unidadDestino) }}
+			{{ form_widget(form.unidadDestino) }}
+			
+			{{ form_label(form.observaciones, 'Observaciones:') }}
+			{{ form_errors(form.observaciones) }}
+			{{ form_widget(form.observaciones, {'attr': {'placeholder': 'Detalle información del traspaso'}}) }}
+		
 		</div>
 	</div>
+			
+		<input type="submit" class="small button" value="Aceptar" />
+	{{ form_end(form) }}
+
 	
 {% endblock %}
 
