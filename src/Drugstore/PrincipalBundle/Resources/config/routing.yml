@@ -40,3 +40,6 @@ drugstore_medicament_reports:
     pattern:  /reports
     defaults: { _controller: DrugstorePrincipalBundle:Medicament:reports }
 
+drugstore_medicament_save:
+    pattern:  /save
+    defaults: { _controller: DrugstorePrincipalBundle:Medicament:save }

@@ -42,7 +42,7 @@ class Medicament
     protected $precioUnitario;
     
     /**
-	 * @ORM\Column(type="string", length=10)
+	 * @ORM\Column(type="integer")
 	 */
     protected $numDosis;
     
@@ -293,7 +293,7 @@ class Medicament
     /**
      * Get numDosis
      *
-     * @return string 
+     * @return integer 
      */
     public function getNumDosis()
     {

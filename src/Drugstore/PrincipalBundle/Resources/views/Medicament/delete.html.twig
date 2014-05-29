@@ -2,8 +2,23 @@
 
 {% block title %}LaFamácia | Baja de medicamento{% endblock %}
 
+{% block sidebar %}
+<div class="row">
+	<div class="large-3 small-8 columns">
+
+	  <img src="{{ asset('zurb.foundation/img/logoo.png') }}" height="350" width="350">
+
+	  <div class="hide-for-small panel">
+		<h3>Descripción</h3>
+		<h5 class="subheader">Baja de medicamento, opción que permite desincorporar de inventario un medicamento.
+		</h5>
+	  </div>
+	
+</div>
+{% endblock %}
+
 {% block body %}
-	<h1>Eliminar <small>Medicamento.</small></h1>
+	<h1>Baja <small>de medicamento</small></h1>
 	
 	{{ form_start(form, {'attr': {'class': 'custom'}}) }}
 	
@@ -12,9 +27,9 @@
 	<div class="row">
 		<div class="large-6 small-6 columns">
 
-			{{ form_label(form.idInventario, 'Inventario:') }}
-			{{ form_errors(form.idInventario) }}
-			{{ form_widget(form.idInventario) }}
+			{{ form_label(form.codMedicamento, 'Códog de medicamento:') }}
+			{{ form_errors(form.codMedicamento) }}
+			{{ form_widget(form.codMedicamento, {'attr': {'placeholder': 'Ingrese código de medicamento'}}) }}
 			
 			{{ form_label(form.nombreMedicamento, 'Nombre del medicamento:') }}
 			{{ form_errors(form.nombreMedicamento) }}

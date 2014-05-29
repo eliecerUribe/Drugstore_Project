@@ -86,24 +86,13 @@
             </div>
 			
             <div align="center" class="large-4 small-6 columns">
-              <i class="fi-marker size-108"></i>
+              <i class="fi-page-export size-108"></i>
  
               <div class="panel">
                 <h5><a href="{{ path('drugstore_medicament_transfer') }}">Traspasar</a></h5>
                 <h6 class="subheader">Medicamento</h6>
               </div>
             </div>
- 
-            {% if is_granted('ROLE_ADMIN') %}
-            <div align="center" class="large-4 small-6 columns">
-              <i class="fi-map size-108"></i>
- 
-              <div class="panel">
-                <h5><a href="#">Trasladar</a></h5>
-                <h6 class="subheader">Medicamento</h6>
-              </div>
-            </div>
-            {% endif %}
  
             {% if is_granted('ROLE_ADMIN') %}
             <div align="center" class="large-4 small-6 columns">
@@ -124,12 +113,23 @@
                 <h6 class="subheader">Stock</h6>
               </div>
             </div>
+            
+            {% if is_granted('ROLE_ADMIN') %}
+            <div align="center" class="large-4 small-6 columns">
+              <i class="fi-clipboard-notes size-108"></i>
+ 
+              <div class="panel">
+                <h5><a href="{{ path('drugstore_medicament_reports') }}">Reportes</a></h5>
+                <h6 class="subheader">Medicamento</h6>
+              </div>
+            </div>
+            {% endif %}
           </div>
 		
     <!-- End Thumbnails -->
  
  
-    <!-- Managed By -->
+    <!-- Managed By --> {#
           <div class="row">
             <div class="large-12 columns">
               <div class="panel">
@@ -148,7 +148,7 @@
  
                 </div>
               </div>
-            </div>
+            </div> #}
  
     <!-- End Managed By -->
  

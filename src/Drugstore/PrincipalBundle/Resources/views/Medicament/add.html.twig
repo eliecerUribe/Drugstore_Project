@@ -2,8 +2,23 @@
 
 {% block title %}FarmaCyT | Alta de medicamento{% endblock %}
 
+{% block sidebar %}
+<div class="row">
+	<div class="large-3 small-8 columns">
+
+	  <img src="{{ asset('zurb.foundation/img/logoo.png') }}" height="350" width="350">
+
+	  <div class="hide-for-small panel">
+		<h3>Descripción</h3>
+		<h5 class="subheader">Alta de medicamento, opción que permite incorporar a inventario un medicamento.
+		</h5>
+	  </div>
+	
+</div>
+{% endblock %}
+
 {% block body %}
-	<h1>Agregar <small>Medicamento.</small></h1>
+	<h1>Alta <small>de medicamento</small></h1>
 	
 	<label style="color:#3366FF;"><b>(*) Campos adicionales únicamente para bienes masivos</b></label><br>
 
@@ -12,27 +27,18 @@
 	{{ form_errors(form) }}
 	
 		<div class="row">
-			<div id="select" class="large-6 small-6 columns">
+			<div class="large-6 small-6 columns">
 				
-				{# <label>Inventario:</label>
-				<select id="customDropdown1" name="inventario">
-				<option>--Seleccione--</option>
-				{% for inventario in inventarios %}
-				<option value="{{inventario.id}}">
-					{{ inventario.descripcion }}
-				</option>
-				{% endfor %}
-				</select> #}
-				{{ form_label(form.inventario, 'Inventario:') }}
+				{{ form_label(form.inventario, 'Almacenamiento:') }}
 				{{ form_errors(form.inventario) }}
 				{{ form_widget(form.inventario) }}
 			</div>
 			
 			<div id="serie" class="large-6 small-6 columns">
 			
-				{{ form_label(form.numSerie, 'Número de serie:')}}
+				{{ form_label(form.numSerie, 'Código:')}}
 				{{ form_errors(form.numSerie) }}
-				{{ form_widget(form.numSerie) }}
+				{{ form_widget(form.numSerie, {'attr': {'placeholder': 'Ingrese código de medicamento'}}) }}
 			
 			</div>
 			
@@ -93,7 +99,7 @@
 			
 			<div class="large-6 small-6 columns">
 			
-				{{ form_label(form.numDosis, 'Número de dosis (mg):') }}
+				{{ form_label(form.numDosis, 'Número de dosis:') }}
 				{{ form_errors(form.numDosis) }}
 				{{ form_widget(form.numDosis, {'attr': {'placeholder': 'Ingrese número de dosis'}}) }}
 			
@@ -140,8 +146,8 @@
 			
 			</div>
 		</div><br>
-		<input type="submit" class="small button" value="Aceptar" />
 		<a href="{{ path('drugstore_principal_homepage') }}" class="small button">Volver</a>
+		<input type="submit" class="small button" value="Aceptar" />
 	
 	{{ form_end(form) }}
 		
@@ -151,16 +157,7 @@
 {% block javascripts %}
 	{{ parent() }}
 	<script>
-		//$(document).ready(function(){
-		//$('div#select').click(function(){
-			//valor = $('{{ form.vars.value.inventario }}').val();
-			//valor = 2;
-			//if ((valor == 2) || (valor == 'Masivo') || (valor == 'masivo'))
-			//	$("div#serie").show();
-			//else
-			//	$("div#serie").hide();
-		//});
-		//});
+		
 	</script>
 	
 	

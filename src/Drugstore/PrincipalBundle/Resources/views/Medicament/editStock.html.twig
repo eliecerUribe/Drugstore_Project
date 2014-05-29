@@ -2,9 +2,24 @@
 
 {% block title %}LaFamácia | Configurar stock{% endblock %}
 
+{% block sidebar %}
+<div class="row">
+	<div class="large-3 small-8 columns">
+
+	  <img src="{{ asset('zurb.foundation/img/logoo.png') }}" height="350" width="350">
+
+	  <div class="hide-for-small panel">
+		<h3>Descripción</h3>
+		<h5 class="subheader">Configurar sotck, opción que permite editar los datos de stock máximo, mínimo y cantidad de un medicamento.
+		</h5>
+	  </div>
+	
+</div>
+{% endblock %}
+
 {% block body %}
 
-<h1>Configurar <small>stock {{ nombre }}.</small></h1>
+<h1>Configurar <small>stock {{ nombre }}</small></h1>
 
 	{{ form_start(form, {'attr': {'class': 'custom'}}) }}
 	

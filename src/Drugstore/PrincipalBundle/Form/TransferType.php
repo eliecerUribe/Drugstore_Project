@@ -11,29 +11,26 @@ class TransferType extends AbstractType
 	public function buildForm(FormBuilderInterface $builder, array $options)
 	{
 		$builder->add('id', 'hidden');
-		$builder->add('idInventario', 'entity', array(
-				'class' => 'Drugstore\\PrincipalBundle\\Entity\\Inventory',
-				'property' => 'id',
-				'multiple' => false,
-				'empty_value' => '--Seleccione--',
-		));
-		$builder->add('nombreMedicamento');
+		$builder->add('idMedicamento');
+		//$builder->add('nombreMedicamento');
 		$builder->add('cantidad');
 		$builder->add('unidadCedente', 'choice', array(
 				'choices' => array(
-					'1'   => 'Inventario Principal',
-					'2'   => 'Inventario Unidosis',
-					'3'   => 'Venta al Público',
+					'inventario principal'  => 'Inventario Principal',
+					'inventario unidosis'   => 'Inventario Unidosis',
+					'venta al publico'   	=> 'Venta al Público',
 				),
 				'multiple' => false,
+				'empty_value' => '--Seleccione--',
 		));
 		$builder->add('unidadDestino', 'choice', array(
 				'choices' => array(
-					'1'   => 'Inventario Principal',
-					'2'   => 'Inventario Unidosis',
-					'3'   => 'Venta al Público',
+					'inventario principal' => 'Inventario Principal',
+					'inventario unidosis'  => 'Inventario Unidosis',
+					'venta al publico'	   => 'Venta al Público',
 				),
 				'multiple' => false,
+				'empty_value' => '--Seleccione--',
 		));
 		//$builder->add('fechaTraspaso');
 		$builder->add('observaciones');

@@ -19,9 +19,9 @@ class Transfer
 	protected $id;
 	
 	/**
-	 * @ORM\Column(type="integer")
+	 * @ORM\Column(type="string", length=20)
 	 */
-	protected $idInventario;
+	protected $idMedicamento;
 	
 	/**
 	 * @ORM\Column(type="string", length=20)
@@ -63,28 +63,6 @@ class Transfer
         return $this->id;
     }
 
-    /**
-     * Set idInventario
-     *
-     * @param integer $idInventario
-     * @return Transfer
-     */
-    public function setIdInventario($idInventario)
-    {
-        $this->idInventario = $idInventario;
-
-        return $this;
-    }
-
-    /**
-     * Get idInventario
-     *
-     * @return integer 
-     */
-    public function getIdInventario()
-    {
-        return $this->idInventario;
-    }
 
     /**
      * Set nombreMedicamento
@@ -222,5 +200,28 @@ class Transfer
     public function getObservaciones()
     {
         return $this->observaciones;
+    }
+
+    /**
+     * Set idMedicamento
+     *
+     * @param integer $idMedicamento
+     * @return Transfer
+     */
+    public function setIdMedicamento($idMedicamento)
+    {
+        $this->idMedicamento = $idMedicamento;
+
+        return $this;
+    }
+
+    /**
+     * Get idMedicamento
+     *
+     * @return integer 
+     */
+    public function getIdMedicamento()
+    {
+        return $this->idMedicamento;
     }
 }

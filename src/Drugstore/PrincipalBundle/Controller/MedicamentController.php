@@ -33,7 +33,7 @@ class MedicamentController extends Controller
 			
 			$request = $this->getRequest();
 			
-			$form = $this->createForm(new EnquiryType(), $medicamento); /* array('action' => $this->generateUrl('drugstore_medicament_processAdd'), 'method' => 'POST')); */
+			$form = $this->createForm(new EnquiryType(), $medicamento); 
 			
 			$em = $this->getDoctrine()->getManager();
 					
@@ -46,10 +46,25 @@ class MedicamentController extends Controller
 				
 				if ($form->isValid()) { 				// pregunta si el objeto $medicamento posee datos validos
 					
+					$numLote = $form->get('numLote')->getData();
 					
-					if($form->get('inventario')->getData() == 'Individual')
+					$fechaE  = $form->get('fechaEmision')->getData();
+					
+					$fechaV  = $form->get('fechaVencimiento')->getData();
+					
+					if($form->get('inventario')->getData() == 'Individual')  //Si es un bien individual no debe rellenar campos en (*)
 					{
+						if((!empty($numLote))or(!empty($fechaE))or(!empty($fechaV)))
+							
+							throw $this->createNotFoundException('Campos en (*) son unicamente para bienes masivos.');
+						
 						$medicamento->setCantidad(1);
+					}
+					else if(($form->get('inventario')->getData() == 'Masivo'))
+					{
+						if((empty($numLote))or(empty($fechaE))or(empty($fechaV)))
+							
+							throw $this->createNotFoundException('Almacenamiento de bien masivo, ingresar campos requiridos (*).');
 					}
 					
 					$em = $this->getDoctrine()->getManager();
@@ -85,15 +100,15 @@ class MedicamentController extends Controller
 			
 				$em = $this->getDoctrine()->getManager();
 				
-				$inventario = $form->get('idInventario')->getData();
+				$codigo_m = $form->get('codMedicamento')->getData();
 				
 				$nombre_m = $form->get('nombreMedicamento')->getData();
 				
-				$id_i = ($inventario == 'Individual') ? 1 : 2;
+				//$id_i = ($inventario == 'Individual') ? 1 : 2;
 				
 				$medicamento = $em->getRepository('DrugstorePrincipalBundle:Medicament')->findOneBy(
-								array('inventario' =>  $id_i,
-									  'nombre' => $nombre_m 
+								array('numSerie' =>  $codigo_m,
+									  'nombre'   => $nombre_m 
 								));
 				
 				if(!$medicamento)
@@ -101,25 +116,20 @@ class MedicamentController extends Controller
 						throw $this->createNotFoundException('Unable to find specified medicament.');
 					}
 				
-				if($id_i == 1)
-				{
-					$em->remove($medicamento);
+				$cantidad = $form->get('cantidad')->getData();
+				
+				if($cantidad > $medicamento->getCantidad())
 					
-				}
-				else
-				{
-					$cantidad = $form->get('cantidad')->getData();
-					
-					$cantidad_m = $medicamento->getCantidad();
-					
-					$cantidad_m = $cantidad_m - $cantidad;
-					
-					$medicamento->setCantidad($cantidad_m);
-				}
+					throw $this->createNotFoundException('La cantidad a remover es mayor a la suministrada por el inventario.');
+				
+				$cantidad_m = $medicamento->getCantidad() - $cantidad;  // Diferencia entre cantidades
+				
+				$medicamento->setCantidad($cantidad_m); 				// Se ajusta el valor restante luego de baja
+				
 				
 				$deletion->setFecha(new \DateTime('now'));
 				
-				$deletion->setIdInventario($id_i);
+				$deletion->setCodMedicamento($codigo_m);
 				
 				$em->persist($deletion);
 				
@@ -141,40 +151,55 @@ class MedicamentController extends Controller
 		
 		$form = $this->createForm(new TransferType(), $transfer);
 		
+		$em = $this->getDoctrine()->getManager();
+		
 		if($request->isMethod('POST')) {
 			
 			$form->bind($request);
 			
 			if ($form->isValid()) {
 				
-				$id_i = $form->get('idInventario')->getData();
-				
-				$nombre_m = $form->get('nombreMedicamento')->getData();
+				$id_m = $form->get('idMedicamento')->getData();
 				
 				$medicamento = $em->getRepository('DrugstorePrincipalBundle:Medicament')->findOneBy(
-								array('inventario' =>  $id_i,
-									  'nombre' => $nombre_m 
+								array('numSerie' =>  $id_m, 
 								));
 				
 				if(!$medicamento)
 				{
 						throw $this->createNotFoundException('Unable to find specified medicament.');
 				}
-				else
-				{
-					$cantidad = $form->get('cantidad')->getData();
+				
+				if($medicamento->getInventario()->getDescripcion() != 'Masivo')
 					
-					$u_cedente = $form->get('unidadCedente')->getData();
-					
-					$u_destino = $form->get('unidadDestino')->getData();
-					
-					//if($medicamento->getCantidad() >= )
-					
-					//$observaciones = $form->get('observaciones')->getData();
-					
-					//$transfer->setFechaTraspaso(new \DateTime('now'));
-				}
+					throw $this->createNotFoundException('El código introducido no está asociado a un bien masivo.');
 			
+				$cantidad = $form->get('cantidad')->getData();
+				
+				$u_cedente = $form->get('unidadCedente')->getData();
+				
+				$u_destino = $form->get('unidadDestino')->getData();
+				
+				
+				if($cantidad <= $medicamento->getNumDosis())   // Si la cantidad a transferir no excede el número de dosis disponibles
+				{
+					$cantidadRestante = $medicamento->getNumDosis() - $cantidad;
+					
+					$medicamento->setNumDosis($cantidadRestante);
+				}
+				else throw $this->createNotFoundException('The amount transferred exceeds the value available.');
+				
+				$transfer->setIdMedicamento($id_m);
+				
+				$transfer->setFechaTraspaso(new \DateTime('now'));
+				
+				$transfer->setNombreMedicamento($medicamento->getNombre());
+				
+				$em->persist($transfer); 
+					
+				$em->flush(); 
+					
+				return $this->redirect($this->generateUrl('drugstore_principal_homepage'));
 			}
 		}
 		return $this->render('DrugstorePrincipalBundle:Medicament:transfer.html.twig', array(
@@ -192,11 +217,7 @@ class MedicamentController extends Controller
 			$request = $this->getRequest();
 			
 			$form = $this->createFormBuilder()
-			->add('idInventario', 'entity', array(
-					'class' => 'Drugstore\\PrincipalBundle\\Entity\\Inventory',
-					'property' => 'descripcion',
-					'multiple' => false,
-			))
+			->add('idMedicamento')
 			->add('nombre', 'text')
 			->getForm();
 			
@@ -208,24 +229,21 @@ class MedicamentController extends Controller
 					
 					$em = $this->getDoctrine()->getManager();
 					
-					$inventario = $form->get('idInventario')->getData();
-					
-					$id_i = ($inventario == 'Individual') ? 1 : 2;
+					$id_m = $form->get('idMedicamento')->getData();
 					
 					$nombre_m = $form->get('nombre')->getData();
 					
 					$medicamento = $em->getRepository('DrugstorePrincipalBundle:Medicament')->findOneBy(
-									array('inventario' =>  $id_i,
-										  'nombre' => $nombre_m 
+									array('numSerie' =>  $id_m,
+										  'nombre'   => $nombre_m 
 									));
-					
-					$id = $medicamento->getId();
 					
 					if(!$medicamento)
 					{
-						throw $this->createNotFoundException('Unable to find Medicament entity.');
+						throw $this->createNotFoundException('Unable to find specified medicament.');
 					}
-
+					$id = $medicamento->getId();
+					
 					return $this->redirect($this->generateUrl('drugstore_medicament_update', array(
 						'id' => $id
 					)));
@@ -282,11 +300,7 @@ class MedicamentController extends Controller
 		$request = $this->getRequest();
 		
 		$form = $this->createFormBuilder()
-        ->add('idInventario', 'entity', array(
-				'class' => 'Drugstore\\PrincipalBundle\\Entity\\Inventory',
-				'property' => 'descripcion',
-				'multiple' => false,
-		))
+        ->add('idMedicamento')
         ->add('nombre', 'text')
         ->getForm();
         
@@ -298,23 +312,21 @@ class MedicamentController extends Controller
 				
 				$em = $this->getDoctrine()->getManager();
 				
-				$inventario = $form->get('idInventario')->getData();
-				
-				$id_i = ($inventario == 'Individual') ? 1 : 2;
+				$id_m = $form->get('idMedicamento')->getData();
 				
 				$nombre_m = $form->get('nombre')->getData();
 				
 				$medicamento = $em->getRepository('DrugstorePrincipalBundle:Medicament')->findOneBy(
-								array('inventario' =>  $id_i,
-									  'nombre' => $nombre_m 
+								array('numSerie' =>  $id_m,
+									  'nombre'   => $nombre_m 
 								));
-				
-				$id = $medicamento->getId();
 				
 				if(!$medicamento)
 				{
 					throw $this->createNotFoundException('Unable to find Medicament entity.');
 				}
+				
+				$id = $medicamento->getId();
 
 				return $this->redirect($this->generateUrl('drugstore_medicament_stock', array(
                     'id' => $id
@@ -478,26 +490,23 @@ class MedicamentController extends Controller
 					))							//Fecha Vencimiento.
 			->getForm();
 			
+			$url1 = $this->generateUrl('drugstore_principal_homepage');
+			
 			if ($request->isMethod('POST')) {
 				
 				$form->bind($request); 
 				
 				if ($form->isValid()) {
 					
-					$url = $this->generateUrl('drugstore_medicament_reports');
+					$url1 = $this->generateUrl('drugstore_medicament_reports');
+					
+					$url2 = $this->generateUrl('drugstore_medicament_save');
 						
 					if($form->get('select1')->getData()) {
 						
 						$medicamentos = $em->getRepository('DrugstorePrincipalBundle:Medicament')->findAll();
 					}
 					else{
-						
-						//$requestAll = $this->getRequest()->request->all();
-						
-						//$pa = $requestAll['form']['texto4']; 				//retrieve indexed array
-						//foreach ($pa as $i) {
-							//	$arreglo[] = $i;
-							//}
 						
 						$pa = $this->getRequest()->request->get('form[texto4]', null, true);
 					
@@ -571,13 +580,43 @@ class MedicamentController extends Controller
 					return $this->render('DrugstorePrincipalBundle:Medicament:showReports.html.twig', array(
 							'medicamentos' => $medicamentos,
 							'vacio'		   => $vacio,
-							'url'		   => $url,
+							'url1'		   => $url1,
+							'url2'		   => $url2,
 						));
 				}
 			}
 			return $this->render('DrugstorePrincipalBundle:Medicament:reports.html.twig', array(
 				'form' => $form->createView(),
+				'url'  => $url1,
 			));
 		}
+	}
+	
+	public function saveAction()
+	{
+		$request = $this->getRequest();
+			
+		$em = $this->getDoctrine()->getManager();
+		
+		$medicamentos = $em->getRepository('DrugstorePrincipalBundle:Medicament')->findAll();
+		
+		$vacio = FALSE;
+		
+		$html = $this->renderView('DrugstorePrincipalBundle:Medicament:showReports.html.twig', array(
+							'medicamentos' => $medicamentos,
+							'vacio'		   => $vacio,
+							'url1'		   => '#',
+							'url2'		   => '#',
+		));
+
+
+		return new Response(
+			$this->get('knp_snappy.pdf')->getOutputFromHtml($html),
+			200,
+			array(
+				'Content-Type'          => 'application/pdf',
+                'Content-Disposition'   => 'attachment; filename="file.pdf"'
+			)
+		);
 	}
 }

@@ -19,9 +19,9 @@ class Delete
 	protected $id;
 	
 	/**
-	 * @ORM\Column(type="integer")
+	 * @ORM\Column(type="string", length=10)
 	 */
-	protected $idInventario;
+	protected $codMedicamento;
 	
 	/**
 	 * @ORM\Column(type="string", length=20)
@@ -166,5 +166,28 @@ class Delete
     public function getCantidad()
     {
         return $this->cantidad;
+    }
+
+    /**
+     * Set codMedicamento
+     *
+     * @param string $codMedicamento
+     * @return Delete
+     */
+    public function setCodMedicamento($codMedicamento)
+    {
+        $this->codMedicamento = $codMedicamento;
+
+        return $this;
+    }
+
+    /**
+     * Get codMedicamento
+     *
+     * @return string 
+     */
+    public function getCodMedicamento()
+    {
+        return $this->codMedicamento;
     }
 }

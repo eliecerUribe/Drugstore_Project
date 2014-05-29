@@ -2,15 +2,30 @@
 
 {% block title %}FarmaCyT | Mostrando resultados de consulta{% endblock %}
 
+{% block sidebar %}
+<div class="row">
+	<div class="large-3 small-8 columns">
+
+	  <img src="{{ asset('zurb.foundation/img/logoo.png') }}" height="350" width="350">
+
+	  <div class="hide-for-small panel">
+		<h3>Descripción</h3>
+		<h5 class="subheader">Reportes, opción que permite extraer información del sistema para satisfacer la búsqueda requerida permitiendo ordenar dicha búsqueda por nombre o codigo de medicamento.
+		</h5>
+	  </div>
+	
+</div>
+{% endblock %}
+
 {% block body %}
 
-<h1>Listado de Medicamentos</h1>
+<h1>Listado <small>de medicamentos</small></h1>
 {% if vacio %}
 	<div>"No hay respuesta a su solicitud"</div>
 {% else %}
 	<table border="1" class="responsive">
 		<tr>
-			<th>ID</th>
+			<th>Código</th>
 			<th>Nombre</th>
 			<th>Laboratorio</th>
 			<th>Stock Mínimo</th>
@@ -28,7 +43,7 @@
 		</tr>
 		{% endfor %}
 	</table>
-	<a class="small button" href="{{ url }}">Volver</a> <a class="small button" href="#">Guardar</a>
+	<a class="small button" href="{{ url1 }}">Volver</a> <a class="small button" href="{{ url2 }}">Guardar</a>
 {% endif %}
 
 {% endblock %}

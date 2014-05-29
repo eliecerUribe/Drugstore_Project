@@ -19,6 +19,7 @@ class AppKernel extends Kernel
             new Acme\HelloBundle\AcmeHelloBundle(),
             new Drugstore\PrincipalBundle\DrugstorePrincipalBundle(),
             new Drugstore\UserBundle\DrugstoreUserBundle(),
+            new Knp\Bundle\SnappyBundle\KnpSnappyBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

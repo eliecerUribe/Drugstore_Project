@@ -2,8 +2,23 @@
 
 {% block title %}FarmaCyT | Traspasar medicamentos(s){% endblock %}
 
+{% block sidebar %}
+<div class="row">
+	<div class="large-3 small-8 columns">
+
+	  <img src="{{ asset('zurb.foundation/img/logoo.png') }}" height="350" width="350">
+
+	  <div class="hide-for-small panel">
+		<h3>Descripción</h3>
+		<h5 class="subheader">Traspaso de medicamento, opción que permite cambiar de unidad un medicamento y específicar una cantidad a transferir para venta al público.
+		</h5>
+	  </div>
+	
+</div>
+{% endblock %}
+
 {% block body %}
-	<h1>Traspasar <small>Medicamento(s).</small></h1>
+	<h1>Traspasar <small>medicamento(s)</small></h1>
 	
 	{{ form_start(form, {'attr': {'class': 'custom'}}) }}
 		
@@ -11,13 +26,9 @@
 	
 	<div class="row">
 		<div class="large-6 small-8 columns">
-			{{ form_label(form.idInventario, 'Id Inventario:') }}
-			{{ form_errors(form.idInventario) }}
-			{{ form_widget(form.idInventario) }}
-			
-			{{ form_label(form.nombreMedicamento, 'Nombre de Medicamento:') }}
-			{{ form_errors(form.nombreMedicamento) }}
-			{{ form_widget(form.nombreMedicamento, {'attr': {'placeholder': 'Ingrese nombre de medicamento'}}) }}
+			{{ form_label(form.idMedicamento, 'Id Medicamento:') }}
+			{{ form_errors(form.idMedicamento) }}
+			{{ form_widget(form.idMedicamento) }}
 			
 			{{ form_label(form.cantidad, 'Cantidad:') }}
 			{{ form_errors(form.cantidad) }}
@@ -37,10 +48,9 @@
 		
 		</div>
 	</div>
-			
-		<input type="submit" class="small button" value="Aceptar" />
+	<input type="submit" class="small button" value="Aceptar" />
+	<a href="{{ path('drugstore_principal_homepage') }}" class="small button">Volver</a>
 	{{ form_end(form) }}
 
-	
 {% endblock %}
 

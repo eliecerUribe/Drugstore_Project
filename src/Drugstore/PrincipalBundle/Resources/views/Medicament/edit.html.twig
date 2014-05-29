@@ -1,7 +1,24 @@
 {% extends '::base.html.twig' %}
 
+{% block title %}LaFamácia | Específicar medicamento{% endblock %}
+
+{% block sidebar %}
+<div class="row">
+	<div class="large-3 small-8 columns">
+
+	  <img src="{{ asset('zurb.foundation/img/logoo.png') }}" height="350" width="350">
+
+	  <div class="hide-for-small panel">
+		<h3>Descripción</h3>
+		<h5 class="subheader">Primer paso para identificar un medicamento.
+		</h5>
+	  </div>
+	
+</div>
+{% endblock %}
+
 {% block body %}
-<h1><small>Identificar medicamento a editar.</small></h1>
+<h1><small>Identificar medicamento a</small> rectificar</h1>
 
 	{{ form_start(form, {'attr': {'class': 'custom'}}) }}
 	
@@ -9,9 +26,9 @@
 
 		<div class="row">
 			<div class="large-6 small-4 columns">
-				{{ form_label(form.idInventario, 'Inventario:') }}
-				{{ form_errors(form.idInventario) }}
-				{{ form_widget(form.idInventario) }}
+				{{ form_label(form.idMedicamento, 'Código:') }}
+				{{ form_errors(form.idMedicamento) }}
+				{{ form_widget(form.idMedicamento, {'attr': {'placeholder': 'Ingrese código de medicamento'}}) }}
 			</div>
 		</div>
 		<div class="row">
@@ -21,8 +38,8 @@
 				{{ form_widget(form.nombre, {'attr': {'placeholder': 'Ingrese nombre de medicamento'}}) }}
 			</div>
 		</div><br>
-		<input type="submit" class="small button" value="Submit" />
-		<a href="{{ path('drugstore_principal_homepage') }}" class="small button">Volver</a>
+		<a onClick='history.go(-1);' class="small button">Volver</a>
+		<input type="submit" class="small button" value="Aceptar" />
 	{{ form_end(form) }}
 	
 {% endblock %}

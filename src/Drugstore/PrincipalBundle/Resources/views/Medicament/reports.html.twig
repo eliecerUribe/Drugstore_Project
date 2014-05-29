@@ -2,9 +2,24 @@
 
 {% block title %}FarmaCyT | Generar reportes{% endblock %}
 
+{% block sidebar %}
+<div class="row">
+	<div class="large-3 small-8 columns">
+
+	  <img src="{{ asset('zurb.foundation/img/logoo.png') }}" height="350" width="350">
+
+	  <div class="hide-for-small panel">
+		<h3>Descripción</h3>
+		<h5 class="subheader">Reportes, opción que permite extraer información del sistema para satisfacer la búsqueda requerida permitiendo ordenar dicha búsqueda por nombre o codigo de medicamento.
+		</h5>
+	  </div>
+	
+</div>
+{% endblock %}
+
 {% block body %}
 
-	<h1 class="fi-magnifying-glass size-45"> Buscar medicamento por:</h1>
+	<h1 class="fi-magnifying-glass size-45"> Buscar <small>medicamento por:</small></h1>
 	{{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
 	{{ form_errors(form) }}
 	<div class="row">
@@ -47,7 +62,7 @@
 		  {{ form_widget(form.texto8, {'attr': {'placeholder': 'Escriba aquí'}}) }}
 		</div>
     </div><br>
-    <input type="submit" class="small button" value="Aceptar" />
+    <a class="small button" href="{{ url }}">Volver</a> <input type="submit" class="small button" value="Aceptar" />
     
     {{ form_end(form) }}
 

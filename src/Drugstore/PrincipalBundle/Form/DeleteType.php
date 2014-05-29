@@ -10,14 +10,10 @@ class DeleteType extends AbstractType
 	public function buildForm(FormBuilderInterface $builder, array $options)
 	{
 		$builder->add('id', 'hidden');
-		$builder->add('idInventario', 'entity', array(
-				'class' => 'Drugstore\\PrincipalBundle\\Entity\\Inventory',
-				'property' => 'descripcion',
-				'multiple' => false,
-		));
+		$builder->add('codMedicamento');
 		$builder->add('nombreMedicamento');
 		$builder->add('causa', 'choice', array(
-					'choices' => array('1' => 'Robo', '2' => 'Pérdida', '3' => 'Apropiación Indevida', '4' => 'Destrucción', '5' => 'Deterioro', '6' => 'Otros'),
+					'choices' => array('robo' => 'Robo', 'perdida' => 'Pérdida', 'apropiacion indebida' => 'Apropiación Indevida', 'destruccion' => 'Destrucción', 'deterioro' => 'Deterioro', 'otros' => 'Otros'),
 					'required' => true,
 		));
 		$builder->add('fecha', 'hidden');
